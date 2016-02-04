@@ -39,6 +39,10 @@
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="TechTalk.SpecFlow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecFlow.2.0.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
@@ -60,6 +64,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specs\Hooks.cs" />
+    <Compile Include="Specs\LikeLesson.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LikeLesson.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Specs\Steps\BackgroundSteps.cs" />
+    <Compile Include="Specs\Steps\CommonSteps.cs" />
+    <Compile Include="Specs\Steps\LikeLessonSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MindsageWeb\MindsageWeb.csproj">
@@ -70,10 +82,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Specs\LikeLesson.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LikeLesson.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Specs\Steps\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
