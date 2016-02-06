@@ -42,25 +42,15 @@ Background: Initialize mocking data
     ]
     """
 
-Scenario: ผู้ใช้กด Like ใน lesson ที่สามารถเข้าถึงได้ ระบบทำการบันทึกการ Like  
-    When User 'sakul@mindsage.com' clicked the like button in the lesson 'L01'  
-    Then System update likes in the lesson 'L01' to '2' likes  
-    And LikeLesson collection JSON format in the system are  
+@mock
+Scenario: User click like lesson Then system update lesson's total like  
+    When UserProfileId 'sakul@mindsage.com' click the like button in the lesson 'L01' of ClassRoom: 'CR01'  
+    Then System update total likes in the lesson 'L01' of ClassRoom 'CR01' to '2' likes  
+    And System add new LikeLesson by JSON format is  
     """
-    [
-        {
-            "id": "LL01",
-            "ClassRoomId": "CR01",
-            "LessonId": "L01",
-            "LikedByUserProfileId": "miolynet@perfenterprise.com",
-            "CreatedDate": "1/1/2016",
-        },
-        {
-            "id": "LL02",
-            "ClassRoomId": "CR01",
-            "LessonId": "L01",
-            "LikedByUserProfileId": "sakul@mindsage.com",
-            "CreatedDate": "1/1/2016",
-        },
-    ]
+    {
+        "ClassRoomId": "CR01",
+        "LessonId": "L01",
+        "LikedByUserProfileId": "sakul@mindsage.com",
+    }
     """

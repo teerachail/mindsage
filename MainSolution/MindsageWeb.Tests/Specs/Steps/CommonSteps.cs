@@ -1,4 +1,6 @@
-﻿using MindsageWeb.Repositories.Models;
+﻿using MindsageWeb.Repositories;
+using MindsageWeb.Repositories.Models;
+using Moq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,14 +17,18 @@ namespace MindsageWeb.Tests.Specs.Steps
         public void GivenSystemHaveClassRoomCollectionWithJSONFormatAre(string multilineText)
         {
             var classRooms = JsonConvert.DeserializeObject<IEnumerable<ClassRoom>>(multilineText);
-            ScenarioContext.Current.Pending();
+            var mockClassRoomRepo = ScenarioContext.Current.Get<Moq.Mock<IClassRoomRepository>>();
+            mockClassRoomRepo.Setup(it => it.GetClassRoomById(It.IsAny<string>()))
+                .Returns<string>(id => classRooms.FirstOrDefault(it => it.id == id));
         }
 
         [Given(@"System have LikeLesson collection with JSON format are")]
         public void GivenSystemHaveLikeLessonCollectionWithJSONFormatAre(string multilineText)
         {
             var likeLessons = JsonConvert.DeserializeObject<IEnumerable<LikeLesson>>(multilineText);
-            ScenarioContext.Current.Pending();
+            var mockLikeLessonRepo = ScenarioContext.Current.Get<Moq.Mock<ILikeLessonRepository>>();
+            mockLikeLessonRepo.Setup(it => it.GetLikeLessonsByLessonId(It.IsAny<string>()))
+                .Returns<string>(id => likeLessons.Where(it => it.LessonId == id));
         }
     }
 }

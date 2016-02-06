@@ -105,37 +105,26 @@ namespace MindsageWeb.Tests.Specs
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("ผู้ใช้กด Like ใน lesson ที่สามารถเข้าถึงได้ ระบบทำการบันทึกการ Like")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("User click like lesson Then system update lesson\'s total like")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "LikeLesson")]
-        public virtual void ผใชกดLikeในLessonทสามารถเขาถงไดระบบทำการบนทกการLike()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mock")]
+        public virtual void UserClickLikeLessonThenSystemUpdateLessonSTotalLike()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("ผู้ใช้กด Like ใน lesson ที่สามารถเข้าถึงได้ ระบบทำการบันทึกการ Like", ((string[])(null)));
-#line 45
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User click like lesson Then system update lesson\'s total like", new string[] {
+                        "mock"});
+#line 46
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 46
-    testRunner.When("User \'sakul@mindsage.com\' clicked the like button in the lesson \'L01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 47
-    testRunner.Then("System update likes in the lesson \'L01\' to \'2\' likes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
+    testRunner.When("UserProfileId \'sakul@mindsage.com\' click the like button in the lesson \'L01\' of C" +
+                    "lassRoom: \'CR01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 48
-    testRunner.And("LikeLesson collection JSON format in the system are", @"[
-    {
-        ""id"": ""LL01"",
-        ""ClassRoomId"": ""CR01"",
-        ""LessonId"": ""L01"",
-        ""LikedByUserProfileId"": ""miolynet@perfenterprise.com"",
-        ""CreatedDate"": ""1/1/2016"",
-    },
-    {
-        ""id"": ""LL02"",
-        ""ClassRoomId"": ""CR01"",
-        ""LessonId"": ""L01"",
-        ""LikedByUserProfileId"": ""sakul@mindsage.com"",
-        ""CreatedDate"": ""1/1/2016"",
-    },
-]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("System update total likes in the lesson \'L01\' of ClassRoom \'CR01\' to \'2\' likes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 49
+    testRunner.And("System add new LikeLesson by JSON format is", "{\r\n    \"ClassRoomId\": \"CR01\",\r\n    \"LessonId\": \"L01\",\r\n    \"LikedByUserProfileId\"" +
+                    ": \"sakul@mindsage.com\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
