@@ -18,6 +18,8 @@ namespace MindsageWeb.Controllers
         private IClassRoomRepository _classRoomRepo;
         private ILikeLessonRepository _likeLessonRepo;
         private ILessonCatalogRepository _lessonCatalogRepo;
+        private ICommentRepository _commentRepo;
+        private ICourseFriendRepository _courseFriendRepo;
 
         #endregion Fields
 
@@ -31,17 +33,23 @@ namespace MindsageWeb.Controllers
         /// <param name="classRoomRepo">Class room repository</param>
         ///<param name="likeLessonRepo">Like lesson repository</param>
         ///<param name="lessonCatalogRepo">Lesson catalog repository</param>
+        ///<param name="commentRepo">Comment repository</param>
+        ///<param name="courseFriend">Course friend repository</param>
         public LessonController(IClassCalendarRepository classCalendarRepo,
             ISubscriptionRepository subscriptionRepo,
             IClassRoomRepository classRoomRepo,
             ILikeLessonRepository likeLessonRepo,
-            ILessonCatalogRepository lessonCatalogRepo)
+            ILessonCatalogRepository lessonCatalogRepo,
+            ICommentRepository commentRepo,
+            ICourseFriendRepository courseFriend)
         {
             _classCalendarRepo = classCalendarRepo;
             _subscriptionRepo = subscriptionRepo;
             _classRoomRepo = classRoomRepo;
             _likeLessonRepo = likeLessonRepo;
             _lessonCatalogRepo = lessonCatalogRepo;
+            _commentRepo = commentRepo;
+            _courseFriendRepo = courseFriend;
         }
 
         #endregion Constructors
@@ -93,6 +101,32 @@ namespace MindsageWeb.Controllers
                 IsTeacher = true, // HACK: Check role
                 TotalLikes = selectedLesson.TotalLikes
             };
+        }
+
+        // GET: api/lesson/{lesson-id}/{class-room-id}/comments/{user-id}
+        [Route(":id/:classRoomId/comments/:userId")]
+        public IEnumerable<Comment> Comments(string id, string classRoomId, string userId)
+        {
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && !string.IsNullOrEmpty(classRoomId)
+                && !string.IsNullOrEmpty(userId);
+            if (!areArgumentsValid) return null;
+
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId);
+            if (!canAccessToTheClassRoom) return null;
+
+            var now = DateTime.Now;
+            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            if (!canAccessToTheClassLesson) return null;
+
+            var courseFriends = _courseFriendRepo.GetCourseFriendByUserProfile(userId);
+            if (courseFriends == null) return null;
+
+            var filterByCreatorNames = courseFriends.FriendWith.Union(new string[] { userId });
+            var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames).ToList();
+
+            // TODO: Group & Order by lesson
+            return comments;
         }
 
         // POST: api/lesson/like

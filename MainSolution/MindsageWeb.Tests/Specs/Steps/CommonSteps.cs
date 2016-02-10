@@ -63,5 +63,23 @@ namespace MindsageWeb.Tests.Specs.Steps
             mockLessonCatalogRepo.Setup(it => it.GetLessonCatalogById(It.IsAny<string>()))
                 .Returns<string>(id => lessonCatalogs.Where(it => it.id == id).FirstOrDefault());
         }
+
+        [Given(@"System have CourseFriend collection with JSON format are")]
+        public void GivenSystemHaveCourseFriendCollectionWithJSONFormatAre(string multilineText)
+        {
+            var courseFriends = JsonConvert.DeserializeObject<IEnumerable<CourseFriend>>(multilineText);
+            var mockCourseFriendRepo = ScenarioContext.Current.Get<Moq.Mock<ICourseFriendRepository>>();
+            mockCourseFriendRepo.Setup(it => it.GetCourseFriendByUserProfile(It.IsAny<string>()))
+                .Returns<string>(id => courseFriends.Where(it => it.UserProfileId == id).FirstOrDefault());
+        }
+
+        [Given(@"System have Comment collection with JSON format are")]
+        public void GivenSystemHaveCommentCollectionWithJSONFormatAre(string multilineText)
+        {
+            var comments = JsonConvert.DeserializeObject<IEnumerable<Comment>>(multilineText);
+            var mockCommentRepo = ScenarioContext.Current.Get<Moq.Mock<ICommentRepository>>();
+            mockCommentRepo.Setup(it => it.GetCommentsByLessonId(It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
+                .Returns<string, IEnumerable<string>>((id, creators) => comments.Where(it => it.LessonId == id && creators.Contains(it.CreatedByUserProfileId)));
+        }
     }
 }

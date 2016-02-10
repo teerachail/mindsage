@@ -19,14 +19,24 @@ namespace MindsageWeb.Tests.Specs.Steps
             var subscriptionRepo = mock.Create<ISubscriptionRepository>();
             var classCalendarRepo = mock.Create<IClassCalendarRepository>();
             var lessonCatalogRepo = mock.Create<ILessonCatalogRepository>();
+            var commentRepo = mock.Create<ICommentRepository>();
+            var courseFriendRepo = mock.Create<ICourseFriendRepository>();
 
-            var myCourseCtrl = new LessonController(classCalendarRepo.Object, subscriptionRepo.Object, classRoomRepo.Object, likeLessonRepo.Object, lessonCatalogRepo.Object);
+            var myCourseCtrl = new LessonController(classCalendarRepo.Object,
+                subscriptionRepo.Object,
+                classRoomRepo.Object,
+                likeLessonRepo.Object,
+                lessonCatalogRepo.Object,
+                commentRepo.Object,
+                courseFriendRepo.Object);
 
             ScenarioContext.Current.Set(classRoomRepo);
             ScenarioContext.Current.Set(likeLessonRepo);
             ScenarioContext.Current.Set(subscriptionRepo);
             ScenarioContext.Current.Set(classCalendarRepo);
             ScenarioContext.Current.Set(lessonCatalogRepo);
+            ScenarioContext.Current.Set(commentRepo);
+            ScenarioContext.Current.Set(courseFriendRepo);
             ScenarioContext.Current.Set(myCourseCtrl);
         }
     }
