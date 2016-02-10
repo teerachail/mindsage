@@ -54,5 +54,14 @@ namespace MindsageWeb.Tests.Specs.Steps
             mockLikeLessonRepo.Setup(it => it.GetLikeLessonsByLessonId(It.IsAny<string>()))
                 .Returns<string>(id => likeLessons.Where(it => it.LessonId == id));
         }
+
+        [Given(@"System have LessonCatalog collection with JSON format are")]
+        public void GivenSystemHaveLessonCatalogCollectionWithJSONFormatAre(string multilineText)
+        {
+            var lessonCatalogs = JsonConvert.DeserializeObject<IEnumerable<LessonCatalog>>(multilineText);
+            var mockLessonCatalogRepo = ScenarioContext.Current.Get<Moq.Mock<ILessonCatalogRepository>>();
+            mockLessonCatalogRepo.Setup(it => it.GetLessonCatalogById(It.IsAny<string>()))
+                .Returns<string>(id => lessonCatalogs.Where(it => it.id == id).FirstOrDefault());
+        }
     }
 }

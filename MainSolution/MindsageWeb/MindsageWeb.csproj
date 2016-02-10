@@ -188,12 +188,15 @@
     <Compile Include="Repositories\ClassRoomRepository.cs" />
     <Compile Include="Repositories\IClassCalendarRepository.cs" />
     <Compile Include="Repositories\IClassRoomRepository.cs" />
+    <Compile Include="Repositories\ILessonCatalogRepository.cs" />
     <Compile Include="Repositories\ILikeLessonRepository.cs" />
     <Compile Include="Repositories\ISubscriptionRepository.cs" />
     <Compile Include="Repositories\LikeLessonRepository.cs" />
     <Compile Include="Repositories\Models\ClassCalendar.cs" />
     <Compile Include="Repositories\Models\ClassRoom.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Repositories\Models\LessonCatalog.cs" />
+    <Compile Include="Repositories\Models\LessonContentRespond.cs" />
     <Compile Include="Repositories\Models\LikeLessonRequest.cs" />
     <Compile Include="Repositories\Models\LikeLesson.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

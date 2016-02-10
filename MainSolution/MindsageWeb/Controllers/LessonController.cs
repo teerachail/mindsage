@@ -17,6 +17,7 @@ namespace MindsageWeb.Controllers
         private ISubscriptionRepository _subscriptionRepo;
         private IClassRoomRepository _classRoomRepo;
         private ILikeLessonRepository _likeLessonRepo;
+        private ILessonCatalogRepository _lessonCatalogRepo;
 
         #endregion Fields
 
@@ -29,22 +30,72 @@ namespace MindsageWeb.Controllers
         /// <param name="subscriptionRepo">Subscription repository</param>
         /// <param name="classRoomRepo">Class room repository</param>
         ///<param name="likeLessonRepo">Like lesson repository</param>
+        ///<param name="lessonCatalogRepo">Lesson catalog repository</param>
         public LessonController(IClassCalendarRepository classCalendarRepo,
             ISubscriptionRepository subscriptionRepo,
             IClassRoomRepository classRoomRepo,
-            ILikeLessonRepository likeLessonRepo)
+            ILikeLessonRepository likeLessonRepo,
+            ILessonCatalogRepository lessonCatalogRepo)
         {
             _classCalendarRepo = classCalendarRepo;
             _subscriptionRepo = subscriptionRepo;
             _classRoomRepo = classRoomRepo;
             _likeLessonRepo = likeLessonRepo;
+            _lessonCatalogRepo = lessonCatalogRepo;
         }
 
         #endregion Constructors
 
         #region Methods
 
-        // POST: api/Lesson
+        // GET: api/lesson/{lesson-id}/{class-room-id}/{user-id}
+        [Route(":id/:classRoomId/:userId")]
+        public LessonContentRespond Get(string id, string classRoomId, string userId)
+        {
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && !string.IsNullOrEmpty(classRoomId)
+                && !string.IsNullOrEmpty(userId);
+            if (!areArgumentsValid) return null;
+
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId);
+            if (!canAccessToTheClassRoom) return null;
+
+            var now = DateTime.Now;
+            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            if (!canAccessToTheClassLesson) return null;
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(classRoomId);
+            if (selectedClassRoom == null) return null;
+
+            var selectedLesson = selectedClassRoom.Lessons.FirstOrDefault(it => it.id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
+            if(selectedLesson == null) return null;
+
+            var selectedLessonCatalog = _lessonCatalogRepo.GetLessonCatalogById(selectedLesson.LessonCatalogId);
+            if (selectedLessonCatalog == null) return null;
+
+            return new LessonContentRespond
+            {
+                Advertisments = selectedLessonCatalog.Advertisments,
+                CourseCatalogId = selectedLessonCatalog.CourseCatalogId,
+                CreatedDate = selectedLessonCatalog.CreatedDate,
+                ExtraContentUrls = selectedLessonCatalog.ExtraContentUrls,
+                FullDescription = selectedLessonCatalog.FullDescription,
+                FullTeacherLessonPlan = selectedLessonCatalog.FullTeacherLessonPlan,
+                id = id,
+                Order = selectedLessonCatalog.Order,
+                PrimaryContentURL = selectedLessonCatalog.PrimaryContentURL,
+                SemesterName = selectedLessonCatalog.SemesterName,
+                ShortDescription = selectedLessonCatalog.ShortDescription,
+                ShortTeacherLessonPlan = selectedLessonCatalog.ShortTeacherLessonPlan,
+                Title = selectedLessonCatalog.Title,
+                UnitNo = selectedLessonCatalog.UnitNo,
+                //CourseMessage = // TODO: Display course message & check show/hide
+                IsTeacher = true, // HACK: Check role
+                TotalLikes = selectedLesson.TotalLikes
+            };
+        }
+
+        // POST: api/lesson/like
         [Route("like")]
         public void Post(LikeLessonRequest data)
         {
@@ -61,8 +112,8 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(data.ClassRoomId, data.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
-            var selectedClass = _classRoomRepo.GetClassRoomById(data.ClassRoomId);
-            var isLikeConditionValid = selectedClass != null && selectedClass.Lessons.Any(it => it.id == data.LessonId);
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(data.ClassRoomId);
+            var isLikeConditionValid = selectedClassRoom != null && selectedClassRoom.Lessons.Any(it => it.id == data.LessonId);
             if (!isLikeConditionValid) return;
 
             var likeLessons = _likeLessonRepo.GetLikeLessonsByLessonId(data.LessonId)
@@ -96,11 +147,13 @@ namespace MindsageWeb.Controllers
                 _likeLessonRepo.UpsertLikeLesson(newLike);
             }
 
-            var selectedLesson = selectedClass.Lessons.First(it => it.id == data.LessonId);
+            var selectedLesson = selectedClassRoom.Lessons.First(it => it.id == data.LessonId);
             selectedLesson.TotalLikes = likeLessons.Where(it => !it.DeletedDate.HasValue).Count();
-            _classRoomRepo.UpdateClassRoom(selectedClass);
-        }
+            _classRoomRepo.UpdateClassRoom(selectedClassRoom);
 
+            // TODO: อัพเดท % lesson progress ของผู้ใช้
+        }
+        
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
