@@ -18,19 +18,19 @@ namespace MindsageWeb.Tests.Specs
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class LikeLessonFeature
+    public partial class Click_Like_A_LessonFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "LikeLesson.feature"
+#line 1 "Click_Like_A_Lesson.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "LikeLesson", "\tIn order to avoid silly mistakes\r\n\tAs a math idiot\r\n\tI want to be told the sum o" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Click-like-a-lesson", "\tIn order to avoid silly mistakes\r\n\tAs a math idiot\r\n\tI want to be told the sum o" +
                     "f two numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -46,9 +46,9 @@ namespace MindsageWeb.Tests.Specs
         public virtual void TestInitialize()
         {
             if (((testRunner.FeatureContext != null) 
-                        && (testRunner.FeatureContext.FeatureInfo.Title != "LikeLesson")))
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "Click-like-a-lesson")))
             {
-                MindsageWeb.Tests.Specs.LikeLessonFeature.FeatureSetup(null);
+                MindsageWeb.Tests.Specs.Click_Like_A_LessonFeature.FeatureSetup(null);
             }
         }
         
@@ -75,56 +75,97 @@ namespace MindsageWeb.Tests.Specs
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
+    testRunner.And("System have Subscription collection with JSON format are", "[\r\n    {\r\n        \"id\": \"Subscription01\",\r\n        \"UserProfileId\": \"sakul@mindsa" +
+                    "ge.com\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"Role\": \"Teacher\"\r\n    " +
+                    "},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 19
+    testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar02"",
+                ""LessonId"": ""Lesson02"",
+                ""Order"": 2,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/8/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar03"",
+                ""LessonId"": ""Lesson03"",
+                ""Order"": 3,
+                ""SemesterGroupName"": ""B"",
+                ""BeginDate"": ""2/15/2016"",
+            },
+        ]
+    },
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 53
     testRunner.And("System have ClassRoom collection with JSON format are", @"[
     {
-        ""id"": ""CR01"",
+        ""id"": ""ClassRoom01"",
         ""Name"": ""Emotional literacy"",
-        ""CourseCatalogId"": ""CC01"",
+        ""CourseCatalogId"": ""CourseCatalog01"",
         ""CreatedDate"": ""2/1/2016"",
         ""Lessons"":
         [
             {
-                ""id"": ""L01"",
+                ""id"": ""Lesson01"",
                 ""TotalLikes"": 1,
-                ""LessonCatalogId"": ""LC01""
+                ""LessonCatalogId"": ""LessonCatalog01""
             },
             {
-                ""id"": ""L02"",
+                ""id"": ""Lesson02"",
                 ""TotalLikes"": 0,
-                ""LessonCatalogId"": ""LC02""
+                ""LessonCatalogId"": ""LessonCatalog02""
             },
         ]
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 32
-    testRunner.And("System have LikeLesson collection with JSON format are", "[\r\n    {\r\n        \"id\": \"LL01\",\r\n        \"ClassRoomId\": \"CR01\",\r\n        \"LessonI" +
-                    "d\": \"L01\",\r\n        \"LikedByUserProfileId\": \"miolynet@perfenterprise.com\",\r\n    " +
-                    "    \"CreatedDate\": \"1/1/2016\",\r\n    },\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 77
+    testRunner.And("System have LikeLesson collection with JSON format are", "[\r\n    {\r\n        \"id\": \"LikeLesson01\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n " +
+                    "       \"LessonId\": \"Lesson01\",\r\n        \"LikedByUserProfileId\": \"miolynet@perfen" +
+                    "terprise.com\",\r\n        \"CreatedDate\": \"2/1/2016\",\r\n    },\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("User click like lesson Then system update lesson\'s total like")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "LikeLesson")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Click-like-a-lesson")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mock")]
         public virtual void UserClickLikeLessonThenSystemUpdateLessonSTotalLike()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User click like lesson Then system update lesson\'s total like", new string[] {
                         "mock"});
-#line 46
+#line 91
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 47
-    testRunner.When("UserProfileId \'sakul@mindsage.com\' click the like button in the lesson \'L01\' of C" +
-                    "lassRoom: \'CR01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 48
-    testRunner.Then("System update total likes in the lesson \'L01\' of ClassRoom \'CR01\' to \'2\' likes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 92
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 93
+    testRunner.When("UserProfileId \'sakul@mindsage.com\' click the like button in the lesson \'Lesson01\'" +
+                    " of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 94
+    testRunner.Then("System update total likes in the lesson \'Lesson01\' of ClassRoom \'ClassRoom01\' to " +
+                    "\'2\' likes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 49
-    testRunner.And("System add new LikeLesson by JSON format is", "{\r\n    \"ClassRoomId\": \"CR01\",\r\n    \"LessonId\": \"L01\",\r\n    \"LikedByUserProfileId\"" +
-                    ": \"sakul@mindsage.com\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 95
+    testRunner.And("System add new LikeLesson by JSON format is", "{\r\n    \"ClassRoomId\": \"ClassRoom01\",\r\n    \"LessonId\": \"Lesson01\",\r\n    \"LikedByUs" +
+                    "erProfileId\": \"sakul@mindsage.com\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

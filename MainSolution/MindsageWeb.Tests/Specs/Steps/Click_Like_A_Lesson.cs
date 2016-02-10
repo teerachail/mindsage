@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace MindsageWeb.Tests.Specs.Steps
 {
     [Binding]
-    public class LikeLessonSteps
+    public class Click_Like_A_Lesson
     {
         [When(@"UserProfileId '(.*)' click the like button in the lesson '(.*)' of ClassRoom: '(.*)'")]
         public void WhenUserProfileIdClickTheLikeButtonInTheLessonOfClassRoom(string userprofileId, string lessonId, string classRoomId)
@@ -24,7 +24,7 @@ namespace MindsageWeb.Tests.Specs.Steps
             var myCourseCtrl = ScenarioContext.Current.Get<LessonController>();
             myCourseCtrl.Post(new Repositories.Models.LikeLessonRequest
             {
-                CourseId = classRoomId,
+                ClassRoomId = classRoomId,
                 LessonId = lessonId,
                 UserProfileId = userprofileId
             });

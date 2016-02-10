@@ -68,15 +68,15 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Specs\Hooks.cs" />
-    <Compile Include="Specs\LikeLesson.feature.cs">
+    <Compile Include="Specs\Click_Like_A_Lesson.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LikeLesson.feature</DependentUpon>
+      <DependentUpon>Click_Like_A_Lesson.feature</DependentUpon>
     </Compile>
+    <Compile Include="Specs\Hooks.cs" />
     <Compile Include="Specs\Steps\BackgroundSteps.cs" />
     <Compile Include="Specs\Steps\CommonSteps.cs" />
-    <Compile Include="Specs\Steps\LikeLessonSteps.cs" />
+    <Compile Include="Specs\Steps\Click_Like_A_Lesson.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MindsageWeb\MindsageWeb.csproj">
@@ -87,9 +87,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Specs\LikeLesson.feature">
+    <None Include="Specs\Click_Like_A_Lesson.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>LikeLesson.feature.cs</LastGenOutput>
+      <LastGenOutput>Click_Like_A_Lesson.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />

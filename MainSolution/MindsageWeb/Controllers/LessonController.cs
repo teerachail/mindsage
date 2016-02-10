@@ -13,6 +13,8 @@ namespace MindsageWeb.Controllers
     {
         #region Fields
 
+        private IClassCalendarRepository _classCalendarRepo;
+        private ISubscriptionRepository _subscriptionRepo;
         private IClassRoomRepository _classRoomRepo;
         private ILikeLessonRepository _likeLessonRepo;
 
@@ -23,10 +25,17 @@ namespace MindsageWeb.Controllers
         /// <summary>
         /// Initialize lesson controller
         /// </summary>
+        /// <param name="classCalendarRepo">Class calendar repository</param>
+        /// <param name="subscriptionRepo">Subscription repository</param>
         /// <param name="classRoomRepo">Class room repository</param>
         ///<param name="likeLessonRepo">Like lesson repository</param>
-        public LessonController(IClassRoomRepository classRoomRepo, ILikeLessonRepository likeLessonRepo)
+        public LessonController(IClassCalendarRepository classCalendarRepo,
+            ISubscriptionRepository subscriptionRepo,
+            IClassRoomRepository classRoomRepo,
+            ILikeLessonRepository likeLessonRepo)
         {
+            _classCalendarRepo = classCalendarRepo;
+            _subscriptionRepo = subscriptionRepo;
             _classRoomRepo = classRoomRepo;
             _likeLessonRepo = likeLessonRepo;
         }
@@ -40,15 +49,29 @@ namespace MindsageWeb.Controllers
         public void Post(LikeLessonRequest data)
         {
             var isArgumentValid = data != null
-                && !string.IsNullOrEmpty(data.CourseId)
+                && !string.IsNullOrEmpty(data.ClassRoomId)
                 && !string.IsNullOrEmpty(data.LessonId)
                 && !string.IsNullOrEmpty(data.UserProfileId);
             if (!isArgumentValid) return;
 
-            var selectedClass = _classRoomRepo.GetClassRoomById(data.CourseId);
+            var canAccessToTheClass = _subscriptionRepo
+                .GetSubscriptionsByUserProfileId(data.UserProfileId)
+                .Where(it => it.ClassRoomId.Equals(data.ClassRoomId, StringComparison.CurrentCultureIgnoreCase))
+                .Any();
+            if (!canAccessToTheClass) return;
+
+            var now = DateTime.Now;
+            var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(data.ClassRoomId);
+            if (selectedClassCalendar == null) return;
+            var canAccessToTheLesson = selectedClassCalendar.LessonCalendars
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.LessonId.Equals(data.LessonId, StringComparison.CurrentCultureIgnoreCase))
+                .Where(it => it.BeginDate <= now)
+                .Any();
+            if (!canAccessToTheLesson) return;
+
+            var selectedClass = _classRoomRepo.GetClassRoomById(data.ClassRoomId);
             var isLikeConditionValid = selectedClass != null && selectedClass.Lessons.Any(it => it.id == data.LessonId);
-            // TODO: ตรวจสอบสิทธิ์ในการเข้าถึง course 
-            // TODO: ตรวจสอบสิทธิ์ในการเข้าถึง lesson
             if (!isLikeConditionValid) return;
 
             var likeLessons = _likeLessonRepo.GetLikeLessonsByLessonId(data.LessonId)
@@ -59,9 +82,8 @@ namespace MindsageWeb.Controllers
             var likedLessonsByUser = likeLessons
                 .Where(it => it.LikedByUserProfileId.Equals(data.UserProfileId, StringComparison.CurrentCultureIgnoreCase));
 
-            var now = DateTime.Now;
-            var isCancel = likedLessonsByUser.Any();
-            if (isCancel)
+            var isUnlike = likedLessonsByUser.Any();
+            if (isUnlike)
             {
                 foreach (var item in likedLessonsByUser)
                 {
@@ -74,7 +96,7 @@ namespace MindsageWeb.Controllers
                 var newLike = new LikeLesson
                 {
                     id = Guid.NewGuid().ToString(),
-                    ClassRoomId = data.CourseId,
+                    ClassRoomId = data.ClassRoomId,
                     LessonId = data.LessonId,
                     LikedByUserProfileId = data.UserProfileId,
                     CreatedDate = now

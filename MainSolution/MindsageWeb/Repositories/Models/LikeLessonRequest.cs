@@ -14,9 +14,9 @@ namespace MindsageWeb.Repositories.Models
         #region Properties
 
         /// <summary>
-        /// รหัส course
+        /// รหัส class room
         /// </summary>
-        public string CourseId { get; set; }
+        public string ClassRoomId { get; set; }
 
         /// <summary>
         /// รหัส lesson

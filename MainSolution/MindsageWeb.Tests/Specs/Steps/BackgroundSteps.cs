@@ -16,11 +16,15 @@ namespace MindsageWeb.Tests.Specs.Steps
 
             var classRoomRepo = mock.Create<IClassRoomRepository>();
             var likeLessonRepo = mock.Create<ILikeLessonRepository>();
+            var subscriptionRepo = mock.Create<ISubscriptionRepository>();
+            var classCalendarRepo = mock.Create<IClassCalendarRepository>();
 
-            var myCourseCtrl = new LessonController(classRoomRepo.Object, likeLessonRepo.Object);
+            var myCourseCtrl = new LessonController(classCalendarRepo.Object, subscriptionRepo.Object, classRoomRepo.Object, likeLessonRepo.Object);
 
             ScenarioContext.Current.Set(classRoomRepo);
             ScenarioContext.Current.Set(likeLessonRepo);
+            ScenarioContext.Current.Set(subscriptionRepo);
+            ScenarioContext.Current.Set(classCalendarRepo);
             ScenarioContext.Current.Set(myCourseCtrl);
         }
     }
