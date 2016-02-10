@@ -73,8 +73,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Click_Like_A_Lesson.feature</DependentUpon>
     </Compile>
+    <Compile Include="Specs\Click_Unlike_A_Lesson.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Click_Unlike_A_Lesson.feature</DependentUpon>
+    </Compile>
     <Compile Include="Specs\Hooks.cs" />
     <Compile Include="Specs\Steps\BackgroundSteps.cs" />
+    <Compile Include="Specs\Steps\Click_Unlike_A_LessonSteps.cs" />
     <Compile Include="Specs\Steps\CommonSteps.cs" />
     <Compile Include="Specs\Steps\Click_Like_A_Lesson.cs" />
   </ItemGroup>
@@ -90,6 +96,10 @@
     <None Include="Specs\Click_Like_A_Lesson.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Click_Like_A_Lesson.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Specs\Click_Unlike_A_Lesson.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Click_Unlike_A_Lesson.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />
