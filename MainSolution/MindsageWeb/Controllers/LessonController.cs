@@ -81,6 +81,8 @@ namespace MindsageWeb.Controllers
             var selectedLessonCatalog = _lessonCatalogRepo.GetLessonCatalogById(selectedLesson.LessonCatalogId);
             if (selectedLessonCatalog == null) return null;
 
+            // TODO: Check account's role for show/hide Teacher's lesson plan
+
             return new LessonContentRespond
             {
                 Advertisments = selectedLessonCatalog.Advertisments,
@@ -123,9 +125,16 @@ namespace MindsageWeb.Controllers
             if (courseFriends == null) return null;
 
             var filterByCreatorNames = courseFriends.FriendWith.Union(new string[] { userId });
-            var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames).ToList();
-
-            // TODO: Group & Order by lesson
+            var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames)
+                .Where(it => !it.DeletedDate.HasValue)
+                .OrderByDescending(it => it.CreatedDate)
+                .ToList();
+            comments.ForEach(comment =>
+            {
+                comment.Discussions = comment.Discussions
+                .Where(it => !it.DeletedDate.HasValue)
+                .OrderByDescending(it => it.CreatedDate);
+            });
             return comments;
         }
 

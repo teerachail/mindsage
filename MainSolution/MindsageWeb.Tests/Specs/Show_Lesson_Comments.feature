@@ -71,6 +71,8 @@ Background: Initialize mocking data
             "Description": "Msg01",
             "TotalLikes": 0,
             "LessonId": "L01",
+			"CreatedDate": "2/1/2016 01:00 am",
+			"Discussions": []
         },
         {
             "id": "Comment02",
@@ -79,6 +81,7 @@ Background: Initialize mocking data
             "Description": "Msg02",
             "TotalLikes": 5,
             "LessonId": "L02",
+			"CreatedDate": "2/1/2016 02:00 am",
             "Discussions":
             [
                 {
@@ -86,6 +89,7 @@ Background: Initialize mocking data
                     "Description": "Discussion01",
                     "TotalLikes": 100,
                     "CreatedByUserProfileId": "sakul@mindsage.com",
+					"CreatedDate": "2/1/2016 02:01 am",
                 }
             ]
         },
@@ -96,6 +100,7 @@ Background: Initialize mocking data
             "Description": "Msg03",
             "TotalLikes": 10,
             "LessonId": "L02",
+			"CreatedDate": "2/1/2016 03:00 am",
             "Discussions":
             [
                 {
@@ -103,12 +108,14 @@ Background: Initialize mocking data
                     "Description": "Discussion02",
                     "TotalLikes": 200,
                     "CreatedByUserProfileId": "someone@mindsage.com",
+					"CreatedDate": "2/1/2016 03:01 am",
                 },
                 {
                     "Id": "DiscussionId03",
                     "Description": "Discussion03",
                     "TotalLikes": 300,
                     "CreatedByUserProfileId": "sakul@mindsage.com",
+					"CreatedDate": "2/1/2016 03:02 am",
                 }
             ]
         },
@@ -119,12 +126,15 @@ Background: Initialize mocking data
             "Description": "Msg04",
             "TotalLikes": 15,
             "LessonId": "L02",
+			"CreatedDate": "2/1/2016 04:00 am",
             "Discussions":
             [
                 {
                     "Id": "DiscussionId04",
                     "Description": "Discussion04",
-                    "TotalLikes": 400
+                    "TotalLikes": 400,
+					"CreatedByUserProfileId": "someone@mindsage.com",
+					"CreatedDate": "2/1/2016 04:01 am",
                 }
             ]
         },
@@ -138,13 +148,40 @@ Scenario: User request lesson's comments and their discussions Then system send 
     Then System send lesson's comment and their discussions with JSON format are  
     """
     [
+		{
+            "id": "Comment03",
+            "ClassRoomId": "CR01",
+            "CreatedByUserProfileId": "earn@mindsage.com",
+            "Description": "Msg03",
+            "TotalLikes": 10,
+            "LessonId": "L02",
+			"CreatedDate": "2/1/2016 03:00 am",
+            "Discussions":
+            [
+				{
+                    "Id": "DiscussionId03",
+                    "Description": "Discussion03",
+                    "TotalLikes": 300,
+                    "CreatedByUserProfileId": "sakul@mindsage.com",
+					"CreatedDate": "2/1/2016 03:02 am",
+                },
+                {
+                    "Id": "DiscussionId02",
+                    "Description": "Discussion02",
+                    "TotalLikes": 200,
+                    "CreatedByUserProfileId": "someone@mindsage.com",
+					"CreatedDate": "2/1/2016 03:01 am",
+                },
+            ]
+        },
         {
             "id": "Comment02",
             "ClassRoomId": "CR01",
-            "UserProfileId": "sakul@mindsage.com",
+            "CreatedByUserProfileId": "sakul@mindsage.com",
             "Description": "Msg02",
             "TotalLikes": 5,
             "LessonId": "L02",
+			"CreatedDate": "2/1/2016 02:00 am",
             "Discussions":
             [
                 {
@@ -152,31 +189,9 @@ Scenario: User request lesson's comments and their discussions Then system send 
                     "Description": "Discussion01",
                     "TotalLikes": 100,
                     "CreatedByUserProfileId": "sakul@mindsage.com",
+					"CreatedDate": "2/1/2016 02:01 am",
                 }
             ]
         },
-        {
-            "id": "Comment03",
-            "ClassRoomId": "CR01",
-            "UserProfileId": "earn@mindsage.com",
-            "Description": "Msg03",
-            "TotalLikes": 10,
-            "LessonId": "L02",
-            "Discussions":
-            [
-                {
-                    "Id": "DiscussionId02",
-                    "Description": "Discussion02",
-                    "TotalLikes": 200,
-                    "CreatedByUserProfileId": "someone@mindsage.com",
-                },
-                {
-                    "Id": "DiscussionId03",
-                    "Description": "Discussion03",
-                    "TotalLikes": 300,
-                    "CreatedByUserProfileId": "sakul@mindsage.com",
-                }
-            ]
-        }
     ]
     """ 
