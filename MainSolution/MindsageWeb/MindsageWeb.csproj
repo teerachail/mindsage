@@ -178,6 +178,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\LessonController.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Repositories\ILessonCatalogRepository.cs" />
     <Compile Include="Repositories\ILikeLessonRepository.cs" />
     <Compile Include="Repositories\ISubscriptionRepository.cs" />
+    <Compile Include="Repositories\IUserActivityRepository.cs" />
     <Compile Include="Repositories\LikeLessonRepository.cs" />
     <Compile Include="Repositories\Models\ClassCalendar.cs" />
     <Compile Include="Repositories\Models\ClassRoom.cs" />
@@ -205,7 +207,9 @@
     <Compile Include="Repositories\Models\LikeLesson.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Models\PostNewCommentRequest.cs" />
     <Compile Include="Repositories\Models\Subscription.cs" />
+    <Compile Include="Repositories\Models\UserActivity.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

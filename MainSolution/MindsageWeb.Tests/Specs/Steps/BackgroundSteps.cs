@@ -21,6 +21,16 @@ namespace MindsageWeb.Tests.Specs.Steps
             var lessonCatalogRepo = mock.Create<ILessonCatalogRepository>();
             var commentRepo = mock.Create<ICommentRepository>();
             var courseFriendRepo = mock.Create<ICourseFriendRepository>();
+            var userActivityRepo = mock.Create<IUserActivityRepository>();
+
+            ScenarioContext.Current.Set(classRoomRepo);
+            ScenarioContext.Current.Set(likeLessonRepo);
+            ScenarioContext.Current.Set(subscriptionRepo);
+            ScenarioContext.Current.Set(classCalendarRepo);
+            ScenarioContext.Current.Set(lessonCatalogRepo);
+            ScenarioContext.Current.Set(commentRepo);
+            ScenarioContext.Current.Set(courseFriendRepo);
+            ScenarioContext.Current.Set(userActivityRepo);
 
             var myCourseCtrl = new LessonController(classCalendarRepo.Object,
                 subscriptionRepo.Object,
@@ -30,14 +40,13 @@ namespace MindsageWeb.Tests.Specs.Steps
                 commentRepo.Object,
                 courseFriendRepo.Object);
 
-            ScenarioContext.Current.Set(classRoomRepo);
-            ScenarioContext.Current.Set(likeLessonRepo);
-            ScenarioContext.Current.Set(subscriptionRepo);
-            ScenarioContext.Current.Set(classCalendarRepo);
-            ScenarioContext.Current.Set(lessonCatalogRepo);
-            ScenarioContext.Current.Set(commentRepo);
-            ScenarioContext.Current.Set(courseFriendRepo);
+            var commentCtrl = new CommentController(classCalendarRepo.Object,
+                subscriptionRepo.Object,
+                commentRepo.Object,
+                userActivityRepo.Object);
+
             ScenarioContext.Current.Set(myCourseCtrl);
+            ScenarioContext.Current.Set(commentCtrl);
         }
     }
 }

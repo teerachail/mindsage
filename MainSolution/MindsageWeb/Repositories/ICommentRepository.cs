@@ -21,6 +21,12 @@ namespace MindsageWeb.Repositories
         /// <param name="creatorProfiles">รายชื่อผู้สร้าง comment ที่ต้องการ</param>
         IEnumerable<Comment> GetCommentsByLessonId(string lessonId, IEnumerable<string> creatorProfiles);
 
+        /// <summary>
+        /// เพิ่มหรืออัพเดทข้อมูล comment
+        /// </summary>
+        /// <param name="data">ข้อมูล comment ที่จะดำเนินการ</param>
+        void UpsertComment(Comment data);
+
         #endregion Methods
     }
 }

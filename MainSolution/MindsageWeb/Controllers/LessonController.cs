@@ -31,10 +31,10 @@ namespace MindsageWeb.Controllers
         /// <param name="classCalendarRepo">Class calendar repository</param>
         /// <param name="subscriptionRepo">Subscription repository</param>
         /// <param name="classRoomRepo">Class room repository</param>
-        ///<param name="likeLessonRepo">Like lesson repository</param>
-        ///<param name="lessonCatalogRepo">Lesson catalog repository</param>
-        ///<param name="commentRepo">Comment repository</param>
-        ///<param name="courseFriend">Course friend repository</param>
+        /// <param name="likeLessonRepo">Like lesson repository</param>
+        /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
+        /// <param name="commentRepo">Comment repository</param>
+        /// <param name="courseFriend">Course friend repository</param>
         public LessonController(IClassCalendarRepository classCalendarRepo,
             ISubscriptionRepository subscriptionRepo,
             IClassRoomRepository classRoomRepo,
@@ -76,7 +76,7 @@ namespace MindsageWeb.Controllers
             if (selectedClassRoom == null) return null;
 
             var selectedLesson = selectedClassRoom.Lessons.FirstOrDefault(it => it.id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
-            if(selectedLesson == null) return null;
+            if (selectedLesson == null) return null;
 
             var selectedLessonCatalog = _lessonCatalogRepo.GetLessonCatalogById(selectedLesson.LessonCatalogId);
             if (selectedLessonCatalog == null) return null;
@@ -140,32 +140,32 @@ namespace MindsageWeb.Controllers
 
         // POST: api/lesson/like
         [Route("like")]
-        public void Post(LikeLessonRequest data)
+        public void Post(LikeLessonRequest body)
         {
-            var isArgumentValid = data != null
-                && !string.IsNullOrEmpty(data.ClassRoomId)
-                && !string.IsNullOrEmpty(data.LessonId)
-                && !string.IsNullOrEmpty(data.UserProfileId);
+            var isArgumentValid = body != null
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.LessonId)
+                && !string.IsNullOrEmpty(body.UserProfileId);
             if (!isArgumentValid) return;
 
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(data.UserProfileId, data.ClassRoomId);
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
             if (!canAccessToTheClassRoom) return;
 
             var now = DateTime.Now;
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(data.ClassRoomId, data.LessonId, now);
+            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
-            var selectedClassRoom = _classRoomRepo.GetClassRoomById(data.ClassRoomId);
-            var isLikeConditionValid = selectedClassRoom != null && selectedClassRoom.Lessons.Any(it => it.id == data.LessonId);
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(body.ClassRoomId);
+            var isLikeConditionValid = selectedClassRoom != null && selectedClassRoom.Lessons.Any(it => it.id == body.LessonId);
             if (!isLikeConditionValid) return;
 
-            var likeLessons = _likeLessonRepo.GetLikeLessonsByLessonId(data.LessonId)
+            var likeLessons = _likeLessonRepo.GetLikeLessonsByLessonId(body.LessonId)
                 .Where(it => !it.DeletedDate.HasValue)
                 .ToList();
             if (likeLessons == null) return;
 
             var likedLessonsByUser = likeLessons
-                .Where(it => it.LikedByUserProfileId.Equals(data.UserProfileId, StringComparison.CurrentCultureIgnoreCase));
+                .Where(it => it.LikedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase));
 
             var isUnlike = likedLessonsByUser.Any();
             if (isUnlike)
@@ -181,22 +181,22 @@ namespace MindsageWeb.Controllers
                 var newLike = new LikeLesson
                 {
                     id = Guid.NewGuid().ToString(),
-                    ClassRoomId = data.ClassRoomId,
-                    LessonId = data.LessonId,
-                    LikedByUserProfileId = data.UserProfileId,
+                    ClassRoomId = body.ClassRoomId,
+                    LessonId = body.LessonId,
+                    LikedByUserProfileId = body.UserProfileId,
                     CreatedDate = now
                 };
                 likeLessons.Add(newLike);
                 _likeLessonRepo.UpsertLikeLesson(newLike);
             }
 
-            var selectedLesson = selectedClassRoom.Lessons.First(it => it.id == data.LessonId);
+            var selectedLesson = selectedClassRoom.Lessons.First(it => it.id == body.LessonId);
             selectedLesson.TotalLikes = likeLessons.Where(it => !it.DeletedDate.HasValue).Count();
             _classRoomRepo.UpdateClassRoom(selectedClassRoom);
 
             // TODO: อัพเดท % lesson progress ของผู้ใช้
         }
-        
+
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
