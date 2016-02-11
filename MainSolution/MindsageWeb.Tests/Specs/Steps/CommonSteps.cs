@@ -80,6 +80,8 @@ namespace MindsageWeb.Tests.Specs.Steps
             var mockCommentRepo = ScenarioContext.Current.Get<Moq.Mock<ICommentRepository>>();
             mockCommentRepo.Setup(it => it.GetCommentsByLessonId(It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
                 .Returns<string, IEnumerable<string>>((id, creators) => comments.Where(it => it.LessonId == id && creators.Contains(it.CreatedByUserProfileId)));
+            mockCommentRepo.Setup(it => it.GetCommentById(It.IsAny<string>()))
+                .Returns<string>(id => comments.FirstOrDefault(it => it.id == id));
         }
 
         [Given(@"System have UserActivity collection with JSON format are")]

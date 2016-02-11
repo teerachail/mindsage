@@ -43,6 +43,8 @@ namespace MindsageWeb.Tests.Specs.Steps
                 && comment.Description == expected.Description
                 && comment.TotalLikes == 0
                 && comment.LessonId == expected.LessonId
+                //comment.CreatorDisplayName // TODO: Show CreatorDisplayName
+                //comment.CreatorImageUrl // TODO: Show CreatorImageUrl
             )));
         }
         

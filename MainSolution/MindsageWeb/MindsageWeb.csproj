@@ -208,6 +208,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Models\PostNewCommentRequest.cs" />
+    <Compile Include="Repositories\Models\RemoveCommentRequest.cs" />
     <Compile Include="Repositories\Models\Subscription.cs" />
     <Compile Include="Repositories\Models\UserActivity.cs" />
     <Compile Include="Startup.cs" />

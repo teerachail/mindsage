@@ -44,7 +44,7 @@ namespace MindsageWeb.Controllers
 
         #region Methods
 
-        // POST: api/Comment
+        // POST: api/comment
         public void Post(PostNewCommentRequest body)
         {
             var areArgumentsValid = body != null
@@ -83,6 +83,33 @@ namespace MindsageWeb.Controllers
 
             selectedLesson.CreatedComments++;
             _userActivityRepo.UpsertUserActivity(selectedUserActivity);
+        }
+
+        // PUT: api/comment/{comment-id}
+        public void Put(string id, RemoveCommentRequest body)
+        {
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && body != null
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.LessonId)
+                && !string.IsNullOrEmpty(body.UserProfileName);
+            if (!areArgumentsValid) return;
+
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileName, body.ClassRoomId);
+            if (!canAccessToTheClassRoom) return;
+
+            var now = DateTime.Now;
+            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            if (!canAccessToTheClassLesson) return;
+
+            var selectedComment = _commentRepo.GetCommentById(id);
+            if (selectedComment == null) return;
+
+            var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileName, StringComparison.CurrentCultureIgnoreCase);
+            if (!isCommentOwner) return;
+
+            selectedComment.DeletedDate = now;
+            _commentRepo.UpsertComment(selectedComment);
         }
 
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)

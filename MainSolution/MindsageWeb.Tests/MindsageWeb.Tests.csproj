@@ -84,6 +84,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Create_A_Comment.feature</DependentUpon>
     </Compile>
+    <Compile Include="Specs\Remove_A_Comment.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Remove_A_Comment.feature</DependentUpon>
+    </Compile>
     <Compile Include="Specs\Show_Lesson_Comments.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,6 +104,7 @@
     <Compile Include="Specs\Steps\CommonSteps.cs" />
     <Compile Include="Specs\Steps\Click_Like_A_Lesson.cs" />
     <Compile Include="Specs\Steps\Create_A_CommentSteps.cs" />
+    <Compile Include="Specs\Steps\Remove_A_CommentSteps.cs" />
     <Compile Include="Specs\Steps\Show_Lesson_CommentsSteps.cs" />
     <Compile Include="Specs\Steps\Show_Lesson_ContentSteps.cs" />
   </ItemGroup>
@@ -122,6 +128,10 @@
     <None Include="Specs\Create_A_Comment.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Create_A_Comment.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Specs\Remove_A_Comment.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Remove_A_Comment.feature.cs</LastGenOutput>
     </None>
     <None Include="Specs\Show_Lesson_Comments.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

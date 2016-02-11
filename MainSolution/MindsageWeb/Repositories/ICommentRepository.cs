@@ -27,6 +27,12 @@ namespace MindsageWeb.Repositories
         /// <param name="data">ข้อมูล comment ที่จะดำเนินการ</param>
         void UpsertComment(Comment data);
 
+        /// <summary>
+        /// ขอข้อมูล comment จากรหัส comment
+        /// </summary>
+        /// <param name="commentId">รหัส comment ที่ต้องการขอข้อมูล</param>
+        Comment GetCommentById(string commentId);
+
         #endregion Methods
     }
 }
