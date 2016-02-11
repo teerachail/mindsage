@@ -20,6 +20,7 @@ namespace MindsageWeb.Controllers
         private ILessonCatalogRepository _lessonCatalogRepo;
         private ICommentRepository _commentRepo;
         private ICourseFriendRepository _courseFriendRepo;
+        private IUserActivityRepository _userActivityRepo;
 
         #endregion Fields
 
@@ -34,14 +35,16 @@ namespace MindsageWeb.Controllers
         /// <param name="likeLessonRepo">Like lesson repository</param>
         /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
         /// <param name="commentRepo">Comment repository</param>
-        /// <param name="courseFriend">Course friend repository</param>
+        /// <param name="courseFriendRepo">Course friend repository</param>
+        /// <param name="userActivityRepo">User activity repository</param>
         public LessonController(IClassCalendarRepository classCalendarRepo,
             ISubscriptionRepository subscriptionRepo,
             IClassRoomRepository classRoomRepo,
             ILikeLessonRepository likeLessonRepo,
             ILessonCatalogRepository lessonCatalogRepo,
             ICommentRepository commentRepo,
-            ICourseFriendRepository courseFriend)
+            ICourseFriendRepository courseFriendRepo,
+            IUserActivityRepository userActivityRepo)
         {
             _classCalendarRepo = classCalendarRepo;
             _subscriptionRepo = subscriptionRepo;
@@ -49,7 +52,8 @@ namespace MindsageWeb.Controllers
             _likeLessonRepo = likeLessonRepo;
             _lessonCatalogRepo = lessonCatalogRepo;
             _commentRepo = commentRepo;
-            _courseFriendRepo = courseFriend;
+            _courseFriendRepo = courseFriendRepo;
+            _userActivityRepo = userActivityRepo;
         }
 
         #endregion Constructors
@@ -178,6 +182,13 @@ namespace MindsageWeb.Controllers
             }
             else
             {
+                var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileAndClassRoomId(body.UserProfileId, body.ClassRoomId);
+                if (selectedUserActivity == null) return;
+                var selectedLessonActivity = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId.Equals(body.LessonId));
+                if (selectedLessonActivity == null) return;
+                selectedLessonActivity.SendLikes++;
+                _userActivityRepo.UpsertUserActivity(selectedUserActivity);
+
                 var newLike = new LikeLesson
                 {
                     id = Guid.NewGuid().ToString(),
@@ -193,8 +204,6 @@ namespace MindsageWeb.Controllers
             var selectedLesson = selectedClassRoom.Lessons.First(it => it.id == body.LessonId);
             selectedLesson.TotalLikes = likeLessons.Where(it => !it.DeletedDate.HasValue).Count();
             _classRoomRepo.UpdateClassRoom(selectedClassRoom);
-
-            // TODO: อัพเดท % lesson progress ของผู้ใช้
         }
 
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)

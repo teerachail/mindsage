@@ -153,6 +153,26 @@ namespace MindsageWeb.Tests.Specs
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 96
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+    {
+        ""id"": ""UserActivity01"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""UserProfileName"": ""sakul@mindsage.com"",
+        ""LessonActivities"":
+        [
+            {
+                ""Id"": ""LessonActivity01"",
+                ""LessonId"": ""Lesson01"",
+                ""ViewContentsCounts"": 1,
+	""TotalContents"": 1,
+                ""CreatedComments"": 0,
+                ""SendLikes"": 1
+            }
+        ]
+    },
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
@@ -163,24 +183,26 @@ namespace MindsageWeb.Tests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User click like lesson Then system update lesson\'s total like", new string[] {
                         "mock"});
-#line 98
+#line 119
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 99
+#line 120
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 100
+#line 121
     testRunner.When("UserProfileId \'sakul@mindsage.com\' click the like button in the lesson \'Lesson01\'" +
                     " of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 101
+#line 122
     testRunner.Then("System update total likes in the lesson \'Lesson01\' of ClassRoom \'ClassRoom01\' to " +
                     "\'1\' likes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 102
+#line 123
     testRunner.And("System update LikeLesson by JSON format is", "{\r\n        \"id\": \"LikeLesson02\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        " +
                     "\"LessonId\": \"Lesson01\",\r\n        \"LikedByUserProfileId\": \"sakul@mindsage.com\",\r\n" +
                     "        \"CreatedDate\": \"2/1/2016\",\r\n        \"DeletedDate\": \"2/8/2016 00:00 am\"\r\n" +
                     "}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 134
+ testRunner.And("System doesn\'t update UserActivity collection with JSON format is", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

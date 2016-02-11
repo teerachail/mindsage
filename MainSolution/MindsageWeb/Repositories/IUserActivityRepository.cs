@@ -11,7 +11,7 @@ namespace MindsageWeb.Repositories
     {
         #region Methods
 
-        UserActivity GetUserActivityByUserProfile(string userprofile);
+        UserActivity GetUserActivityByUserProfileAndClassRoomId(string userprofile, string classRoomId);
         void UpsertUserActivity(UserActivity data);
 
         #endregion Methods

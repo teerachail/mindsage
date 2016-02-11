@@ -38,7 +38,8 @@ namespace MindsageWeb.Tests.Specs.Steps
                 likeLessonRepo.Object,
                 lessonCatalogRepo.Object,
                 commentRepo.Object,
-                courseFriendRepo.Object);
+                courseFriendRepo.Object,
+                userActivityRepo.Object);
 
             var commentCtrl = new CommentController(classCalendarRepo.Object,
                 subscriptionRepo.Object,

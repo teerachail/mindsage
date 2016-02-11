@@ -93,6 +93,27 @@ Background: Initialize mocking data
         },
     ]
     """
+	And System have UserActivity collection with JSON format are
+    """
+    [
+        {
+            "id": "UserActivity01",
+            "ClassRoomId": "ClassRoom01",
+            "UserProfileName": "sakul@mindsage.com",
+            "LessonActivities":
+            [
+                {
+                    "Id": "LessonActivity01",
+                    "LessonId": "Lesson01",
+                    "ViewContentsCounts": 1,
+					"TotalContents": 1,
+                    "CreatedComments": 0,
+                    "SendLikes": 1
+                }
+            ]
+        },
+    ]
+    """  
 
 @mock  
 Scenario: User click like lesson Then system update lesson's total like  
@@ -110,3 +131,4 @@ Scenario: User click like lesson Then system update lesson's total like
             "DeletedDate": "2/8/2016 00:00 am"
     }
     """  
+	And System doesn't update UserActivity collection with JSON format is  

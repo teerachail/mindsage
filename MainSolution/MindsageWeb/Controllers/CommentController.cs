@@ -61,7 +61,7 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
-            var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfile(body.UserProfileName);
+            var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileAndClassRoomId(body.UserProfileName, body.ClassRoomId);
             if (selectedUserActivity == null) return;
 
             var selectedLesson = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId == body.LessonId);

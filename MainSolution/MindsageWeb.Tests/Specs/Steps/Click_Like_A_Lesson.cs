@@ -21,6 +21,9 @@ namespace MindsageWeb.Tests.Specs.Steps
             var mockClassRoomRepo = ScenarioContext.Current.Get<Moq.Mock<IClassRoomRepository>>();
             mockClassRoomRepo.Setup(it => it.UpdateClassRoom(It.IsAny<ClassRoom>()));
 
+            var mockUserActivityRepo = ScenarioContext.Current.Get<Moq.Mock<IUserActivityRepository>>();
+            mockUserActivityRepo.Setup(it => it.UpsertUserActivity(It.IsAny<UserActivity>()));
+
             var myCourseCtrl = ScenarioContext.Current.Get<LessonController>();
             myCourseCtrl.Post(new Repositories.Models.LikeLessonRequest
             {
