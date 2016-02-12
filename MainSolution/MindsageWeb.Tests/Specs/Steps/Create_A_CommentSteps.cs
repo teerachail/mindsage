@@ -52,7 +52,7 @@ namespace MindsageWeb.Tests.Specs.Steps
         public void ThenSystemUpdateUserActivityCollectionWithJSONFormatIs(string multilineText)
         {
             var expected = JsonConvert.DeserializeObject<UserActivity>(multilineText);
-
+            var x = JsonConvert.SerializeObject(expected);
             var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
             mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.Is<UserActivity>(activity=>
                 JsonConvert.SerializeObject(activity) == JsonConvert.SerializeObject(expected)

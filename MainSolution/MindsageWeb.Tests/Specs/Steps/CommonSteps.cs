@@ -89,8 +89,8 @@ namespace MindsageWeb.Tests.Specs.Steps
         {
             var userActivities = JsonConvert.DeserializeObject<IEnumerable<UserActivity>>(multilineText);
             var mockUserActivityRepo = ScenarioContext.Current.Get<Moq.Mock<IUserActivityRepository>>();
-            mockUserActivityRepo.Setup(it => it.GetUserActivityByUserProfileAndClassRoomId(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns<string, string>((userprofile, classRoomId) => userActivities.FirstOrDefault(it => it.UserProfileName == userprofile && it.ClassRoomId == classRoomId));
+            mockUserActivityRepo.Setup(it => it.GetUserActivityByUserProfileIdAndClassRoomId(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<string, string>((userprofile, classRoomId) => userActivities.FirstOrDefault(it => it.UserProfileId == userprofile && it.ClassRoomId == classRoomId));
         }
     }
 }

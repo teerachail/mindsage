@@ -114,22 +114,26 @@ namespace MindsageWeb.Tests.Specs
 #line hidden
 #line 60
     testRunner.And("System have UserActivity collection with JSON format are", @"[
-    {
-        ""id"": ""UserActivity01"",
-        ""ClassRoomId"": ""ClassRoom01"",
-        ""UserProfileName"": ""sakul@mindsage.com"",
-        ""LessonActivities"":
-        [
 {
-                ""Id"": ""LessonActivity01"",
-                ""LessonId"": ""Lesson01"",
-                ""ViewContentsCounts"": 1,
-	""TotalContents"": 1,
-                ""CreatedComments"": 1,
-                ""SendLikes"": 1
-            }
-        ]
-    },
+""id"": ""UserActivity01"",
+""UserProfileId"": ""sakul@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": 
+	[
+		""Content01""
+	],
+	""CreatedCommentAmount"": 1,
+	""SendLikesAmount"": 1
+}
+]
+}
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -142,17 +146,17 @@ namespace MindsageWeb.Tests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User remove his comment Then system remove his comment", new string[] {
                         "mock"});
-#line 83
+#line 87
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 84
+#line 88
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 85
+#line 89
     testRunner.When("UserProfileId \'sakul@mindsage.com\' remove the comment \'Comment01\' in the lesson \'" +
                     "Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 86
+#line 90
     testRunner.Then("System Update Comment by JSON format is", @"{
     ""Id"": ""Comment01"",
     ""ClassRoomId"": ""ClassRoom01"",
@@ -163,7 +167,7 @@ this.FeatureBackground();
     ""Discussions"": [],
     ""DeletedDate"": ""2/8/2016 00:00 am""
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 99
+#line 103
     testRunner.And("System doesn\'t update UserActivity collection with JSON format is", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

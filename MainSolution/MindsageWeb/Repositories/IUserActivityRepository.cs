@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace MindsageWeb.Repositories
 {
+    /// <summary>
+    /// มาตรฐานในการติดต่อกับ User activity
+    /// </summary>
     public interface IUserActivityRepository
     {
         #region Methods
 
-        UserActivity GetUserActivityByUserProfileAndClassRoomId(string userprofile, string classRoomId);
+        UserActivity GetUserActivityByUserProfileIdAndClassRoomId(string userprofile, string classRoomId);
         void UpsertUserActivity(UserActivity data);
 
         #endregion Methods

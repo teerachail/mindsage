@@ -11,7 +11,12 @@ namespace MindsageWeb.Repositories.Models
         #region Properties
 
         public string id { get; set; }
+        public bool IsTeacher { get; set; }
+        public bool IsPrivateAccount { get; set; }
         public string UserProfileName { get; set; }
+        public string UserProfileImageUrl { get; set; }
+        public DateTime? HideClassRoomMessageDate { get; set; }
+        public string UserProfileId { get; set; }
         public string ClassRoomId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
@@ -25,11 +30,12 @@ namespace MindsageWeb.Repositories.Models
             #region Properties
 
             public string id { get; set; }
+            public DateTime BeginDate { get; set; }
+            public int TotalContentsAmount { get; set; }
+            public IEnumerable<string> SawContentIds { get; set; }
+            public int CreatedCommentAmount { get; set; }
+            public int SendLikesAmount { get; set; }
             public string LessonId { get; set; }
-            public int ViewContentsCounts { get; set; }
-            public int TotalContents { get; set; }
-            public int CreatedComments { get; set; }
-            public int SendLikes { get; set; }
 
             #endregion Properties
         }

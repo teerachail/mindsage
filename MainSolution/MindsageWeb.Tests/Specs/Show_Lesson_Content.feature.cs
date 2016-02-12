@@ -109,23 +109,26 @@ namespace MindsageWeb.Tests.Specs
         ""id"": ""LessonCatalog01"",
         ""Title"": ""What Is Emotional Literacy?"",
         ""ShortTeacherLessonPlan"": ""short teacher lesson plan01"",
-        ""FullTeacherLessonPlan"": ""full teacher lesson plan01""
+        ""FullTeacherLessonPlan"": ""full teacher lesson plan01"",
+""PrimaryContentUrl"": ""PrimaryContent01"",
     },
     {
         ""id"": ""LessonCatalog02"",
         ""Title"": ""Intrinsic Education vs. Associative Learning"",
         ""ShortTeacherLessonPlan"": ""short teacher lesson plan02"",
-        ""FullTeacherLessonPlan"": ""full teacher lesson plan02""
+        ""FullTeacherLessonPlan"": ""full teacher lesson plan02"",
+""PrimaryContentUrl"": ""PrimaryContent02"",
     },
     {
         ""id"": ""LessonCatalog03"",
         ""Title"": ""Three: What Is Goodness?"",
         ""ShortTeacherLessonPlan"": ""short teacher lesson plan03"",
-        ""FullTeacherLessonPlan"": ""full teacher lesson plan03""
+        ""FullTeacherLessonPlan"": ""full teacher lesson plan03"",
+""PrimaryContentUrl"": ""PrimaryContent03"",
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 61
+#line 64
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -155,10 +158,40 @@ namespace MindsageWeb.Tests.Specs
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 92
+#line 95
     testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01" +
                     "\",\r\n\t\"Role\": \"Teacher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Cl" +
                     "assCalendar01\",\r\n},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 112
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""sakul@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ],
+	""CreatedCommentAmount"": 0,
+	""SendLikesAmount"": 0
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ],
+	""CreatedCommentAmount"": 0,
+	""SendLikesAmount"": 0
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -170,17 +203,17 @@ namespace MindsageWeb.Tests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User open a course\'s lesson Then system send the selected lesson\'s content back", new string[] {
                         "mock"});
-#line 111
+#line 145
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 112
+#line 146
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 113
+#line 147
     testRunner.When("UserProfile \'sakul@mindsage.com\' open the lesson \'Lesson02\' of ClassRoom: \'ClassR" +
                     "oom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 114
+#line 148
     testRunner.Then("System send lesson\'s content with JSON format is", @"{
     ""id"": ""Lesson02"",
     ""Title"": ""Intrinsic Education vs. Associative Learning"",
@@ -190,6 +223,37 @@ this.FeatureBackground();
     ""TotalLikes"": 5,
     ""IsTeacher"": true
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 160
+ testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""sakul@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity01"",
+""LessonId"": ""Lesson01"",
+
+""TotalContentsAmount"": 1,
+""SawContentIds"": [ ],
+""CreatedCommentAmount"": 0,
+""SendLikesAmount"": 0
+},
+{
+""id"": ""LessonActivity02"",
+""LessonId"": ""Lesson02"",
+
+""TotalContentsAmount"": 1,
+""SawContentIds"": 
+[
+	""PrimaryContent02""
+],
+""CreatedCommentAmount"": 0,
+""SendLikesAmount"": 0
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

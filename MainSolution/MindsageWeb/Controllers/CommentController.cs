@@ -61,7 +61,7 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
-            var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileAndClassRoomId(body.UserProfileName, body.ClassRoomId);
+            var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileName, body.ClassRoomId);
             if (selectedUserActivity == null) return;
 
             var selectedLesson = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId == body.LessonId);
@@ -81,7 +81,7 @@ namespace MindsageWeb.Controllers
             };
             _commentRepo.UpsertComment(newComment);
 
-            selectedLesson.CreatedComments++;
+            selectedLesson.CreatedCommentAmount++;
             _userActivityRepo.UpsertUserActivity(selectedUserActivity);
         }
 

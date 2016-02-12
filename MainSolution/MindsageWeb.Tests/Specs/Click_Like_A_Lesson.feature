@@ -95,22 +95,26 @@ Background: Initialize mocking data
 	And System have UserActivity collection with JSON format are
     """
     [
-        {
-            "id": "UserActivity01",
-            "ClassRoomId": "ClassRoom01",
-            "UserProfileName": "sakul@mindsage.com",
-            "LessonActivities":
-            [
-                {
-                    "Id": "LessonActivity01",
-                    "LessonId": "Lesson01",
-                    "ViewContentsCounts": 1,
-					"TotalContents": 1,
-                    "CreatedComments": 0,
-                    "SendLikes": 0
-                }
-            ]
-        },
+		{
+			"id": "UserActivity01",
+			"UserProfileId": "sakul@mindsage.com",
+			"ClassRoomId": "ClassRoom01",
+			"LessonActivities":
+			[
+				{
+					"id": "LessonActivity01",
+					"LessonId": "Lesson01",
+
+					"TotalContentsAmount": 1,
+					"SawContentIds": 
+					[
+						"Content01"
+					],
+					"CreatedCommentAmount": 0,
+					"SendLikesAmount": 0
+				}
+			]
+		}
     ]
     """  
 
@@ -129,20 +133,24 @@ Scenario: User click like lesson Then system update lesson's total like
     """  
 	And System update UserActivity collection with JSON format is  
     """
-    {
-        "id": "UserActivity01",
-        "ClassRoomId": "ClassRoom01",
-        "UserProfileName": "sakul@mindsage.com",
-        "LessonActivities":
-        [
-            {
-                "Id": "LessonActivity01",
-                "LessonId": "Lesson01",
-                "ViewContentsCounts": 1,
-				"TotalContents": 1,
-                "CreatedComments": 0,
-                "SendLikes": 1
-            }
-        ]
-    }
+	{
+		"id": "UserActivity01",
+		"UserProfileId": "sakul@mindsage.com",
+		"ClassRoomId": "ClassRoom01",
+		"LessonActivities":
+		[
+			{
+				"id": "LessonActivity01",
+				"LessonId": "Lesson01",
+
+				"TotalContentsAmount": 1,
+				"SawContentIds": 
+				[
+					"Content01"
+				],
+				"CreatedCommentAmount": 0,
+				"SendLikesAmount": 1
+			}
+		]
+	}
     """  

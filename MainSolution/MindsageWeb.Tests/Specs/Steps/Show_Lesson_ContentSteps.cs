@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MindsageWeb.Controllers;
+using MindsageWeb.Repositories;
 using MindsageWeb.Repositories.Models;
+using Moq;
 using Newtonsoft.Json;
 using System;
 using TechTalk.SpecFlow;
@@ -13,6 +15,9 @@ namespace MindsageWeb.Tests.Specs.Steps
         [When(@"UserProfile '(.*)' open the lesson '(.*)' of ClassRoom: '(.*)'")]
         public void WhenUserProfileOpenTheLessonOfClassRoom(string userprofileId, string lessonId, string classRoomId)
         {
+            var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
+            mockUserActivityRepo.Setup(it => it.UpsertUserActivity(It.IsAny<UserActivity>()));
+
             var lessonCtrl = ScenarioContext.Current.Get<LessonController>();
             var result = lessonCtrl.Get(lessonId, classRoomId, userprofileId);
             ScenarioContext.Current.Set(result);

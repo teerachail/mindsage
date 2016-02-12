@@ -85,6 +85,21 @@ namespace MindsageWeb.Controllers
             var selectedLessonCatalog = _lessonCatalogRepo.GetLessonCatalogById(selectedLesson.LessonCatalogId);
             if (selectedLessonCatalog == null) return null;
 
+            var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(userId, classRoomId);
+            if (selectedUserActivity == null) return null;
+            var selectedLessonActivity = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId.Equals(id, StringComparison.CurrentCultureIgnoreCase));
+            if (selectedLessonActivity == null) return null;
+            var shouldUpdateSawPrimaryContent = !selectedLessonActivity.SawContentIds.Contains(selectedLessonCatalog.PrimaryContentURL);
+            if (shouldUpdateSawPrimaryContent)
+            {
+                var sawList = selectedLessonActivity.SawContentIds.ToList();
+                sawList.Add(selectedLessonCatalog.PrimaryContentURL);
+                selectedLessonActivity.SawContentIds = sawList;
+                var x = Newtonsoft.Json.JsonConvert.SerializeObject(selectedUserActivity);
+
+                _userActivityRepo.UpsertUserActivity(selectedUserActivity);
+            }
+
             // TODO: Check account's role for show/hide Teacher's lesson plan
 
             return new LessonContentRespond
@@ -187,11 +202,11 @@ namespace MindsageWeb.Controllers
             }
             else
             {
-                var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileAndClassRoomId(body.UserProfileId, body.ClassRoomId);
+                var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileId, body.ClassRoomId);
                 if (selectedUserActivity == null) return;
                 var selectedLessonActivity = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId.Equals(body.LessonId));
                 if (selectedLessonActivity == null) return;
-                selectedLessonActivity.SendLikes++;
+                selectedLessonActivity.SendLikesAmount++;
                 _userActivityRepo.UpsertUserActivity(selectedUserActivity);
 
                 var newLike = new LikeLesson

@@ -113,24 +113,28 @@ namespace MindsageWeb.Tests.Specs
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 59
-    testRunner.And("System have UserActivity collection with JSON format are", @"[
-    {
-        ""id"": ""UserActivity01"",
-        ""ClassRoomId"": ""ClassRoom01"",
-        ""UserProfileName"": ""sakul@mindsage.com"",
-        ""LessonActivities"":
-        [
-            {
-                ""Id"": ""LessonActivity01"",
-                ""LessonId"": ""Lesson01"",
-                ""ViewContentsCounts"": 1,
-	""TotalContents"": 1,
-                ""CreatedComments"": 0,
-                ""SendLikes"": 1
-            }
-        ]
-    },
-]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System have UserActivity collection with JSON format are", @"   [
+	{
+		""id"": ""UserActivity01"",
+		""UserProfileId"": ""sakul@mindsage.com"",
+		""ClassRoomId"": ""ClassRoom01"",
+		""LessonActivities"":
+		[
+			{
+				""id"": ""LessonActivity01"",
+				""LessonId"": ""Lesson01"",
+
+				""TotalContentsAmount"": 1,
+				""SawContentIds"": 
+				[
+					""Content01""
+				],
+				""CreatedCommentAmount"": 0,
+				""SendLikesAmount"": 1
+			}
+		]
+	}
+   ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -142,37 +146,41 @@ namespace MindsageWeb.Tests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create a new comment Then system create a new comment", new string[] {
                         "mock"});
-#line 82
+#line 86
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 83
+#line 87
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 84
+#line 88
     testRunner.When("UserProfileId \'sakul@mindsage.com\' create a new comment with a message is \'Hello " +
                     "lesson 1\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 85
+#line 89
     testRunner.Then("System add new Comment by JSON format is", "{\r\n    \"ClassRoomId\": \"ClassRoom01\",\r\n    \"CreatedByUserProfileId\": \"sakul@mindsa" +
                     "ge.com\",\r\n    \"Description\": \"Hello lesson 1\",\r\n    \"TotalLikes\": 0,\r\n    \"Lesso" +
                     "nId\": \"Lesson01\",\r\n    \"Discussions\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 96
+#line 100
     testRunner.And("System update UserActivity collection with JSON format is", @"{
-    ""id"": ""UserActivity01"",
-    ""ClassRoomId"": ""ClassRoom01"",
-    ""UserProfileName"": ""sakul@mindsage.com"",
-    ""LessonActivities"":
-    [
-        {
-            ""Id"": ""LessonActivity01"",
-            ""LessonId"": ""Lesson01"",
-            ""ViewContentsCounts"": 1,
-""TotalContents"": 1,
-            ""CreatedComments"": 1,
-            ""SendLikes"": 1
-        }
-    ]
+""id"": ""UserActivity01"",
+""UserProfileId"": ""sakul@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity01"",
+""LessonId"": ""Lesson01"",
+
+""TotalContentsAmount"": 1,
+""SawContentIds"": 
+[
+	""Content01""
+],
+""CreatedCommentAmount"": 1,
+""SendLikesAmount"": 1
+}
+]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
