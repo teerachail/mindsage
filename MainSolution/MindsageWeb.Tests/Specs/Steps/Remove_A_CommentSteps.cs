@@ -26,7 +26,7 @@ namespace MindsageWeb.Tests.Specs.Steps
             };
             commentCtrl.Put(commentId, body);
         }
-        
+
         [Then(@"System Update Comment by JSON format is")]
         public void ThenSystemUpdateCommentByJSONFormatIs(string multilineText)
         {

@@ -69,7 +69,8 @@ namespace MindsageWeb.Controllers
                 && !string.IsNullOrEmpty(userId);
             if (!areArgumentsValid) return null;
 
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId);
+            UserProfile.Subscription subscription;
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId, out subscription);
             if (!canAccessToTheClassRoom) return null;
 
             var now = DateTime.Now;
@@ -95,12 +96,10 @@ namespace MindsageWeb.Controllers
                 var sawList = selectedLessonActivity.SawContentIds.ToList();
                 sawList.Add(selectedLessonCatalog.PrimaryContentURL);
                 selectedLessonActivity.SawContentIds = sawList;
-                var x = Newtonsoft.Json.JsonConvert.SerializeObject(selectedUserActivity);
-
                 _userActivityRepo.UpsertUserActivity(selectedUserActivity);
             }
 
-            // TODO: Check account's role for show/hide Teacher's lesson plan
+            var isTeacher = subscription.Role == UserProfile.AccountRole.Teacher;
 
             return new LessonContentRespond
             {
@@ -109,17 +108,17 @@ namespace MindsageWeb.Controllers
                 CreatedDate = selectedLessonCatalog.CreatedDate,
                 ExtraContentUrls = selectedLessonCatalog.ExtraContentUrls,
                 FullDescription = selectedLessonCatalog.FullDescription,
-                FullTeacherLessonPlan = selectedLessonCatalog.FullTeacherLessonPlan,
+                FullTeacherLessonPlan = isTeacher ? selectedLessonCatalog.FullTeacherLessonPlan : string.Empty,
                 id = id,
                 Order = selectedLessonCatalog.Order,
                 PrimaryContentURL = selectedLessonCatalog.PrimaryContentURL,
                 SemesterName = selectedLessonCatalog.SemesterName,
                 ShortDescription = selectedLessonCatalog.ShortDescription,
-                ShortTeacherLessonPlan = selectedLessonCatalog.ShortTeacherLessonPlan,
+                ShortTeacherLessonPlan = isTeacher ? selectedLessonCatalog.ShortTeacherLessonPlan : string.Empty,
                 Title = selectedLessonCatalog.Title,
                 UnitNo = selectedLessonCatalog.UnitNo,
                 CourseMessage = selectedClassRoom.Message,
-                IsTeacher = true, // HACK: Check role
+                IsTeacher = isTeacher,
                 TotalLikes = selectedLesson.TotalLikes
             };
         }
@@ -228,17 +227,25 @@ namespace MindsageWeb.Controllers
 
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
         {
+            UserProfile.Subscription subscription;
+            return checkAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out subscription);
+        }
+        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId, out UserProfile.Subscription subscription)
+        {
+            subscription = null;
             var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
             if (!areArgumentsValid) return false;
 
             var selectedUserProfile = _userprofileRepo.GetUserProfileById(userprofileId);
             if (selectedUserProfile == null) return false;
 
-            var canAccessToTheClass = selectedUserProfile
+            subscription = selectedUserProfile
                 .Subscriptions
+                .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
-                .Any();
+                .FirstOrDefault();
 
+            var canAccessToTheClass = subscription != null;
             return canAccessToTheClass;
         }
         private bool checkAccessPermissionToSelectedClassLesson(string classRoomId, string lessonId, DateTime currentTime)

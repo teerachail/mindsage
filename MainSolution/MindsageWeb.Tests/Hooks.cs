@@ -14,7 +14,6 @@ namespace MindsageWeb.Tests.Specs
         [BeforeScenario]
         public void BeforeScenario()
         {
-            //TODO: implement logic that has to run before executing each scenario
         }
 
         [BeforeScenarioBlock("mock")]
@@ -30,7 +29,6 @@ namespace MindsageWeb.Tests.Specs
         [AfterScenario]
         public void AfterScenario()
         {
-            //TODO: implement logic that has to run after executing each scenario
         }
     }
 }

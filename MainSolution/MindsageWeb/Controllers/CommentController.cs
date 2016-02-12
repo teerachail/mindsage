@@ -54,7 +54,8 @@ namespace MindsageWeb.Controllers
                 && !string.IsNullOrEmpty(body.UserProfileName);
             if (!areArgumentsValid) return;
 
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileName, body.ClassRoomId);
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileName, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return;
 
             var now = DateTime.Now;
@@ -75,8 +76,8 @@ namespace MindsageWeb.Controllers
                 Description = body.Description,
                 LessonId = body.LessonId,
                 CreatedDate = now,
-                //CreatorDisplayName // TODO: Show CreatorDisplayName
-                //CreatorImageUrl // TODO: Show CreatorImageUrl
+                CreatorDisplayName = userprofile.Name,
+                CreatorImageUrl = userprofile.ImageProfileUrl,
                 Discussions = Enumerable.Empty<Comment.Discussion>(),
             };
             _commentRepo.UpsertComment(newComment);
@@ -114,11 +115,18 @@ namespace MindsageWeb.Controllers
 
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
         {
+            UserProfile userprofile;
+            return checkAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out userprofile);
+        }
+        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId, out UserProfile userprofile)
+        {
+            userprofile = null;
             var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
             if (!areArgumentsValid) return false;
 
             var selectedUserProfile = _userprofileRepo.GetUserProfileById(userprofileId);
             if (selectedUserProfile == null) return false;
+            userprofile = selectedUserProfile;
 
             var canAccessToTheClass = selectedUserProfile
                 .Subscriptions
