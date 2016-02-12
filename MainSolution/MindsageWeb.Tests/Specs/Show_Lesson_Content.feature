@@ -13,7 +13,7 @@ Background: Initialize mocking data
             "Name": "Emotional literacy",
             "CourseCatalogId": "CourseCatalog01",
             "CreatedDate": "2/1/2016",
-            "CourseMessage": "Don't forget to comment a lesson!",
+            "Message": "Don't forget to comment a lesson!",
             "Lessons":
             [
                 {
@@ -89,15 +89,21 @@ Background: Initialize mocking data
         },
     ]
     """  
-    And System have Subscription collection with JSON format are  
+    And System have UserProfile collection with JSON format are  
     """
     [
-        {
-            "id": "Subscription01",
-            "UserProfileId": "sakul@mindsage.com",
-            "ClassRoomId": "ClassRoom01",
-            "Role": "Teacher"
-        },
+		{
+			"id": "sakul@mindsage.com",
+			"Subscriptions":
+			[
+				{
+					"id": "Subscription01",
+					"Role": "Teacher",
+					"ClassRoomId": "ClassRoom01",
+					"ClassCalendarId": "ClassCalendar01",
+				},
+			]
+		},
     ]
     """  
 

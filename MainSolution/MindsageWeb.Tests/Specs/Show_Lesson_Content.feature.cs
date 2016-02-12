@@ -81,7 +81,7 @@ namespace MindsageWeb.Tests.Specs
         ""Name"": ""Emotional literacy"",
         ""CourseCatalogId"": ""CourseCatalog01"",
         ""CreatedDate"": ""2/1/2016"",
-        ""CourseMessage"": ""Don't forget to comment a lesson!"",
+        ""Message"": ""Don't forget to comment a lesson!"",
         ""Lessons"":
         [
             {
@@ -156,9 +156,9 @@ namespace MindsageWeb.Tests.Specs
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 92
-    testRunner.And("System have Subscription collection with JSON format are", "[\r\n    {\r\n        \"id\": \"Subscription01\",\r\n        \"UserProfileId\": \"sakul@mindsa" +
-                    "ge.com\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"Role\": \"Teacher\"\r\n    " +
-                    "},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01" +
+                    "\",\r\n\t\"Role\": \"Teacher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Cl" +
+                    "assCalendar01\",\r\n},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -170,17 +170,17 @@ namespace MindsageWeb.Tests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User open a course\'s lesson Then system send the selected lesson\'s content back", new string[] {
                         "mock"});
-#line 105
+#line 111
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 106
+#line 112
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 107
+#line 113
     testRunner.When("UserProfile \'sakul@mindsage.com\' open the lesson \'Lesson02\' of ClassRoom: \'ClassR" +
                     "oom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 108
+#line 114
     testRunner.Then("System send lesson\'s content with JSON format is", @"{
     ""id"": ""Lesson02"",
     ""Title"": ""Intrinsic Education vs. Associative Learning"",

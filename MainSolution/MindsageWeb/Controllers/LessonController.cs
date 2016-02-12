@@ -14,7 +14,7 @@ namespace MindsageWeb.Controllers
         #region Fields
 
         private IClassCalendarRepository _classCalendarRepo;
-        private ISubscriptionRepository _subscriptionRepo;
+        private IUserProfileRepository _userprofileRepo;
         private IClassRoomRepository _classRoomRepo;
         private ILikeLessonRepository _likeLessonRepo;
         private ILessonCatalogRepository _lessonCatalogRepo;
@@ -30,7 +30,7 @@ namespace MindsageWeb.Controllers
         /// Initialize lesson controller
         /// </summary>
         /// <param name="classCalendarRepo">Class calendar repository</param>
-        /// <param name="subscriptionRepo">Subscription repository</param>
+        /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="classRoomRepo">Class room repository</param>
         /// <param name="likeLessonRepo">Like lesson repository</param>
         /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
@@ -38,7 +38,7 @@ namespace MindsageWeb.Controllers
         /// <param name="courseFriendRepo">Course friend repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
         public LessonController(IClassCalendarRepository classCalendarRepo,
-            ISubscriptionRepository subscriptionRepo,
+            IUserProfileRepository userprofileRepo,
             IClassRoomRepository classRoomRepo,
             ILikeLessonRepository likeLessonRepo,
             ILessonCatalogRepository lessonCatalogRepo,
@@ -47,7 +47,7 @@ namespace MindsageWeb.Controllers
             IUserActivityRepository userActivityRepo)
         {
             _classCalendarRepo = classCalendarRepo;
-            _subscriptionRepo = subscriptionRepo;
+            _userprofileRepo = userprofileRepo;
             _classRoomRepo = classRoomRepo;
             _likeLessonRepo = likeLessonRepo;
             _lessonCatalogRepo = lessonCatalogRepo;
@@ -103,7 +103,7 @@ namespace MindsageWeb.Controllers
                 ShortTeacherLessonPlan = selectedLessonCatalog.ShortTeacherLessonPlan,
                 Title = selectedLessonCatalog.Title,
                 UnitNo = selectedLessonCatalog.UnitNo,
-                //CourseMessage = // TODO: Display course message & check show/hide
+                CourseMessage = selectedClassRoom.Message,
                 IsTeacher = true, // HACK: Check role
                 TotalLikes = selectedLesson.TotalLikes
             };
@@ -211,8 +211,11 @@ namespace MindsageWeb.Controllers
             var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
             if (!areArgumentsValid) return false;
 
-            var canAccessToTheClass = _subscriptionRepo
-                .GetSubscriptionsByUserProfileId(userprofileId)
+            var selectedUserProfile = _userprofileRepo.GetUserProfileById(userprofileId);
+            if (selectedUserProfile == null) return false;
+
+            var canAccessToTheClass = selectedUserProfile
+                .Subscriptions
                 .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
                 .Any();
 

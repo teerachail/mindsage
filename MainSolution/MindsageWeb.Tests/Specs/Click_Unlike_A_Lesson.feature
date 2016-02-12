@@ -5,15 +5,21 @@
 
 Background: Initialize mocking data  
 	Given Initialize mocking data  
-    And System have Subscription collection with JSON format are  
+    And System have UserProfile collection with JSON format are  
     """
     [
-        {
-            "id": "Subscription01",
-            "UserProfileId": "sakul@mindsage.com",
-            "ClassRoomId": "ClassRoom01",
-            "Role": "Teacher"
-        },
+		{
+			"id": "sakul@mindsage.com",
+			"Subscriptions":
+			[
+				{
+					"id": "Subscription01",
+					"Role": "Teacher",
+					"ClassRoomId": "ClassRoom01",
+					"ClassCalendarId": "ClassCalendar01",
+				},
+			]
+		},
     ]
     """  
     And System have ClassCalendar collection with JSON format are

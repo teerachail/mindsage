@@ -13,13 +13,13 @@ namespace MindsageWeb.Tests.Specs.Steps
     [Binding]
     public sealed class CommonSteps
     {
-        [Given(@"System have Subscription collection with JSON format are")]
-        public void GivenSystemHaveSubscriptionCollectionWithJSONFormatAre(string multilineText)
+        [Given(@"System have UserProfile collection with JSON format are")]
+        public void GivenSystemHaveUserProfileCollectionWithJSONFormatAre(string multilineText)
         {
-            var subscriptions = JsonConvert.DeserializeObject<IEnumerable<Subscription>>(multilineText);
-            var mockSubscriptionRepo = ScenarioContext.Current.Get<Mock<ISubscriptionRepository>>();
-            mockSubscriptionRepo.Setup(it => it.GetSubscriptionsByUserProfileId(It.IsAny<string>()))
-                .Returns<string>(userprofileId => subscriptions.Where(it => it.UserProfileId == userprofileId));
+            var userprofiles = JsonConvert.DeserializeObject<IEnumerable<UserProfile>>(multilineText);
+            var mockUserprofileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
+            mockUserprofileRepo.Setup(it => it.GetUserProfileById(It.IsAny<string>()))
+                .Returns<string>(userprofileId => userprofiles.FirstOrDefault(it => it.id == userprofileId));
         }
 
         [Given(@"System have ClassCalendar collection with JSON format are")]

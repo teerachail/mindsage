@@ -77,71 +77,73 @@ namespace MindsageWeb.Tests.Specs
 #line 8
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
-        ""id"": ""CCalendar01"",
+        ""id"": ""ClassCalendar01"",
         ""BeginDate"": ""2/1/2016"",
-        ""ClassRoomId"": ""CR01"",
+        ""ClassRoomId"": ""ClassRoom01"",
         ""LessonCalendars"":
         [
             {
-                ""Id"": ""LC01"",
-                ""LessonId"": ""L01"",
+                ""Id"": ""ClassCalendar01"",
+                ""LessonId"": ""Lesson01"",
                 ""BeginDate"": ""2/1/2016"",
-                ""LessonCatalogId"": ""LCatalog01""
+                ""LessonCatalogId"": ""LessonCatalog01""
             },
             {
                 ""Id"": ""LC02"",
-                ""LessonId"": ""L02"",
+                ""LessonId"": ""Lesson02"",
                 ""BeginDate"": ""2/8/2016"",
-                ""LessonCatalogId"": ""LCatalog02""
+                ""LessonCatalogId"": ""LessonCatalog02""
             },
             {
                 ""Id"": ""LC03"",
-                ""LessonId"": ""L03"",
+                ""LessonId"": ""Lesson03"",
                 ""BeginDate"": ""2/15/2016"",
-                ""LessonCatalogId"": ""LCatalog03""
+                ""LessonCatalogId"": ""LessonCatalog03""
             },
         ]
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 39
-    testRunner.And("System have Subscription collection with JSON format are", "[\r\n    {\r\n        \"id\": \"S01\",\r\n        \"UserProfileId\": \"sakul@mindsage.com\",\r\n " +
-                    "       \"ClassRoomId\": \"CR01\",\r\n        \"Role\": \"Teacher\"\r\n    },\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01" +
+                    "\",\r\n\t\"Role\": \"Teacher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Cl" +
+                    "assCalendar01\",\r\n},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 50
+#line 56
     testRunner.And("System have CourseFriend collection with JSON format are", "[\r\n    {\r\n        \"id\": \"CourseFriend01\",\r\n        \"UserProfileId\": \"sakul@mindsa" +
-                    "ge.com\",\r\n        \"ClassRoomId\": \"CR01\",\r\n        \"FriendWith\":\r\n        [\r\n    " +
-                    "        \"earn@mindsage.com\"\r\n        ]\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+                    "ge.com\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"FriendWith\":\r\n        " +
+                    "[\r\n            \"earn@mindsage.com\"\r\n        ]\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 64
-    testRunner.And("System have Comment collection with JSON format are", "[\r\n    {\r\n        \"id\": \"Comment01\",\r\n        \"ClassRoomId\": \"CR01\",\r\n        \"Cr" +
-                    "eatedByUserProfileId\": \"sakul@mindsage.com\",\r\n        \"Description\": \"Msg01\",\r\n " +
-                    "       \"TotalLikes\": 0,\r\n        \"LessonId\": \"L01\",\r\n\"CreatedDate\": \"2/1/2016 01" +
-                    ":00 am\",\r\n\"Discussions\": []\r\n    },\r\n    {\r\n        \"id\": \"Comment02\",\r\n        " +
-                    "\"ClassRoomId\": \"CR01\",\r\n        \"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r" +
-                    "\n        \"Description\": \"Msg02\",\r\n        \"TotalLikes\": 5,\r\n        \"LessonId\": " +
-                    "\"L02\",\r\n\"CreatedDate\": \"2/1/2016 02:00 am\",\r\n        \"Discussions\":\r\n        [\r\n" +
-                    "            {\r\n                \"Id\": \"DiscussionId01\",\r\n                \"Descrip" +
-                    "tion\": \"Discussion01\",\r\n                \"TotalLikes\": 100,\r\n                \"Cre" +
-                    "atedByUserProfileId\": \"sakul@mindsage.com\",\r\n\t\"CreatedDate\": \"2/1/2016 02:01 am\"" +
-                    ",\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"id\": \"Comment03\",\r\n        " +
-                    "\"ClassRoomId\": \"CR01\",\r\n        \"CreatedByUserProfileId\": \"earn@mindsage.com\",\r\n" +
-                    "        \"Description\": \"Msg03\",\r\n        \"TotalLikes\": 10,\r\n        \"LessonId\": " +
-                    "\"L02\",\r\n\"CreatedDate\": \"2/1/2016 03:00 am\",\r\n        \"Discussions\":\r\n        [\r\n" +
-                    "            {\r\n                \"Id\": \"DiscussionId02\",\r\n                \"Descrip" +
-                    "tion\": \"Discussion02\",\r\n                \"TotalLikes\": 200,\r\n                \"Cre" +
-                    "atedByUserProfileId\": \"someone@mindsage.com\",\r\n\t\"CreatedDate\": \"2/1/2016 03:01 a" +
-                    "m\",\r\n            },\r\n            {\r\n                \"Id\": \"DiscussionId03\",\r\n   " +
-                    "             \"Description\": \"Discussion03\",\r\n                \"TotalLikes\": 300,\r" +
-                    "\n                \"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\t\"CreatedDate\"" +
-                    ": \"2/1/2016 03:02 am\",\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"id\": \"" +
-                    "Comment04\",\r\n        \"ClassRoomId\": \"CR01\",\r\n        \"CreatedByUserProfileId\": \"" +
-                    "someone@mindsage.com\",\r\n        \"Description\": \"Msg04\",\r\n        \"TotalLikes\": 1" +
-                    "5,\r\n        \"LessonId\": \"L02\",\r\n\"CreatedDate\": \"2/1/2016 04:00 am\",\r\n        \"Di" +
-                    "scussions\":\r\n        [\r\n            {\r\n                \"Id\": \"DiscussionId04\",\r\n" +
-                    "                \"Description\": \"Discussion04\",\r\n                \"TotalLikes\": 40" +
-                    "0,\r\n\t\"CreatedByUserProfileId\": \"someone@mindsage.com\",\r\n\t\"CreatedDate\": \"2/1/201" +
-                    "6 04:01 am\",\r\n            }\r\n        ]\r\n    },\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 70
+    testRunner.And("System have Comment collection with JSON format are", "[\r\n    {\r\n        \"id\": \"Comment01\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n    " +
+                    "    \"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n        \"Description\": \"Msg" +
+                    "01\",\r\n        \"TotalLikes\": 0,\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": " +
+                    "\"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n    {\r\n        \"id\": \"Comment02" +
+                    "\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"sa" +
+                    "kul@mindsage.com\",\r\n        \"Description\": \"Msg02\",\r\n        \"TotalLikes\": 5,\r\n " +
+                    "       \"LessonId\": \"Lesson02\",\r\n\"CreatedDate\": \"2/1/2016 02:00 am\",\r\n        \"Di" +
+                    "scussions\":\r\n        [\r\n            {\r\n                \"Id\": \"DiscussionId01\",\r\n" +
+                    "                \"Description\": \"Discussion01\",\r\n                \"TotalLikes\": 10" +
+                    "0,\r\n                \"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\t\"CreatedDa" +
+                    "te\": \"2/1/2016 02:01 am\",\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"id\"" +
+                    ": \"Comment03\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserPro" +
+                    "fileId\": \"earn@mindsage.com\",\r\n        \"Description\": \"Msg03\",\r\n        \"TotalLi" +
+                    "kes\": 10,\r\n        \"LessonId\": \"Lesson02\",\r\n\"CreatedDate\": \"2/1/2016 03:00 am\",\r" +
+                    "\n        \"Discussions\":\r\n        [\r\n            {\r\n                \"Id\": \"Discus" +
+                    "sionId02\",\r\n                \"Description\": \"Discussion02\",\r\n                \"Tot" +
+                    "alLikes\": 200,\r\n                \"CreatedByUserProfileId\": \"someone@mindsage.com\"" +
+                    ",\r\n\t\"CreatedDate\": \"2/1/2016 03:01 am\",\r\n            },\r\n            {\r\n        " +
+                    "        \"Id\": \"DiscussionId03\",\r\n                \"Description\": \"Discussion03\",\r" +
+                    "\n                \"TotalLikes\": 300,\r\n                \"CreatedByUserProfileId\": \"" +
+                    "sakul@mindsage.com\",\r\n\t\"CreatedDate\": \"2/1/2016 03:02 am\",\r\n            }\r\n     " +
+                    "   ]\r\n    },\r\n    {\r\n        \"id\": \"Comment04\",\r\n        \"ClassRoomId\": \"ClassRo" +
+                    "om01\",\r\n        \"CreatedByUserProfileId\": \"someone@mindsage.com\",\r\n        \"Desc" +
+                    "ription\": \"Msg04\",\r\n        \"TotalLikes\": 15,\r\n        \"LessonId\": \"Lesson02\",\r\n" +
+                    "\"CreatedDate\": \"2/1/2016 04:00 am\",\r\n        \"Discussions\":\r\n        [\r\n        " +
+                    "    {\r\n                \"Id\": \"DiscussionId04\",\r\n                \"Description\": \"" +
+                    "Discussion04\",\r\n                \"TotalLikes\": 400,\r\n\t\"CreatedByUserProfileId\": \"" +
+                    "someone@mindsage.com\",\r\n\t\"CreatedDate\": \"2/1/2016 04:01 am\",\r\n            }\r\n   " +
+                    "     ]\r\n    },\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -155,25 +157,25 @@ namespace MindsageWeb.Tests.Specs
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request lesson\'s comments and their discussions Then system send the lesson\'" +
                     "s comments and their discussions back", new string[] {
                         "mock"});
-#line 145
+#line 151
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 146
+#line 152
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 147
-    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment & discussion from the lesson \'L0" +
-                    "2\' of ClassRoom: \'CR01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 153
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment & discussion from the lesson \'Le" +
+                    "sson02\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 148
+#line 154
     testRunner.Then("System send lesson\'s comment and their discussions with JSON format are", @"[
 {
         ""id"": ""Comment03"",
-        ""ClassRoomId"": ""CR01"",
+        ""ClassRoomId"": ""ClassRoom01"",
         ""CreatedByUserProfileId"": ""earn@mindsage.com"",
         ""Description"": ""Msg03"",
         ""TotalLikes"": 10,
-        ""LessonId"": ""L02"",
+        ""LessonId"": ""Lesson02"",
 ""CreatedDate"": ""2/1/2016 03:00 am"",
         ""Discussions"":
         [
@@ -195,11 +197,11 @@ this.FeatureBackground();
     },
     {
         ""id"": ""Comment02"",
-        ""ClassRoomId"": ""CR01"",
+        ""ClassRoomId"": ""ClassRoom01"",
         ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
         ""Description"": ""Msg02"",
         ""TotalLikes"": 5,
-        ""LessonId"": ""L02"",
+        ""LessonId"": ""Lesson02"",
 ""CreatedDate"": ""2/1/2016 02:00 am"",
         ""Discussions"":
         [

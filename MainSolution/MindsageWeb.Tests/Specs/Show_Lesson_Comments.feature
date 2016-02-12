@@ -9,42 +9,48 @@ Background: Initialize mocking data
     """
     [
         {
-            "id": "CCalendar01",
+            "id": "ClassCalendar01",
             "BeginDate": "2/1/2016",
-            "ClassRoomId": "CR01",
+            "ClassRoomId": "ClassRoom01",
             "LessonCalendars":
             [
                 {
-                    "Id": "LC01",
-                    "LessonId": "L01",
+                    "Id": "ClassCalendar01",
+                    "LessonId": "Lesson01",
                     "BeginDate": "2/1/2016",
-                    "LessonCatalogId": "LCatalog01"
+                    "LessonCatalogId": "LessonCatalog01"
                 },
                 {
                     "Id": "LC02",
-                    "LessonId": "L02",
+                    "LessonId": "Lesson02",
                     "BeginDate": "2/8/2016",
-                    "LessonCatalogId": "LCatalog02"
+                    "LessonCatalogId": "LessonCatalog02"
                 },
                 {
                     "Id": "LC03",
-                    "LessonId": "L03",
+                    "LessonId": "Lesson03",
                     "BeginDate": "2/15/2016",
-                    "LessonCatalogId": "LCatalog03"
+                    "LessonCatalogId": "LessonCatalog03"
                 },
             ]
         },
     ]
     """  
-    And System have Subscription collection with JSON format are  
+	And System have UserProfile collection with JSON format are  
     """
     [
-        {
-            "id": "S01",
-            "UserProfileId": "sakul@mindsage.com",
-            "ClassRoomId": "CR01",
-            "Role": "Teacher"
-        },
+		{
+			"id": "sakul@mindsage.com",
+			"Subscriptions":
+			[
+				{
+					"id": "Subscription01",
+					"Role": "Teacher",
+					"ClassRoomId": "ClassRoom01",
+					"ClassCalendarId": "ClassCalendar01",
+				},
+			]
+		},
     ]
     """  
     And System have CourseFriend collection with JSON format are
@@ -53,7 +59,7 @@ Background: Initialize mocking data
         {
             "id": "CourseFriend01",
             "UserProfileId": "sakul@mindsage.com",
-            "ClassRoomId": "CR01",
+            "ClassRoomId": "ClassRoom01",
             "FriendWith":
             [
                 "earn@mindsage.com"
@@ -66,21 +72,21 @@ Background: Initialize mocking data
     [
         {
             "id": "Comment01",
-            "ClassRoomId": "CR01",
+            "ClassRoomId": "ClassRoom01",
             "CreatedByUserProfileId": "sakul@mindsage.com",
             "Description": "Msg01",
             "TotalLikes": 0,
-            "LessonId": "L01",
+            "LessonId": "Lesson01",
 			"CreatedDate": "2/1/2016 01:00 am",
 			"Discussions": []
         },
         {
             "id": "Comment02",
-            "ClassRoomId": "CR01",
+            "ClassRoomId": "ClassRoom01",
             "CreatedByUserProfileId": "sakul@mindsage.com",
             "Description": "Msg02",
             "TotalLikes": 5,
-            "LessonId": "L02",
+            "LessonId": "Lesson02",
 			"CreatedDate": "2/1/2016 02:00 am",
             "Discussions":
             [
@@ -95,11 +101,11 @@ Background: Initialize mocking data
         },
         {
             "id": "Comment03",
-            "ClassRoomId": "CR01",
+            "ClassRoomId": "ClassRoom01",
             "CreatedByUserProfileId": "earn@mindsage.com",
             "Description": "Msg03",
             "TotalLikes": 10,
-            "LessonId": "L02",
+            "LessonId": "Lesson02",
 			"CreatedDate": "2/1/2016 03:00 am",
             "Discussions":
             [
@@ -121,11 +127,11 @@ Background: Initialize mocking data
         },
         {
             "id": "Comment04",
-            "ClassRoomId": "CR01",
+            "ClassRoomId": "ClassRoom01",
             "CreatedByUserProfileId": "someone@mindsage.com",
             "Description": "Msg04",
             "TotalLikes": 15,
-            "LessonId": "L02",
+            "LessonId": "Lesson02",
 			"CreatedDate": "2/1/2016 04:00 am",
             "Discussions":
             [
@@ -144,17 +150,17 @@ Background: Initialize mocking data
 @mock  
 Scenario: User request lesson's comments and their discussions Then system send the lesson's comments and their discussions back  
     Given Today is '2/8/2016 00:00 am'  
-    When UserProfile 'sakul@mindsage.com' request comment & discussion from the lesson 'L02' of ClassRoom: 'CR01'
+    When UserProfile 'sakul@mindsage.com' request comment & discussion from the lesson 'Lesson02' of ClassRoom: 'ClassRoom01'
     Then System send lesson's comment and their discussions with JSON format are  
     """
     [
 		{
             "id": "Comment03",
-            "ClassRoomId": "CR01",
+            "ClassRoomId": "ClassRoom01",
             "CreatedByUserProfileId": "earn@mindsage.com",
             "Description": "Msg03",
             "TotalLikes": 10,
-            "LessonId": "L02",
+            "LessonId": "Lesson02",
 			"CreatedDate": "2/1/2016 03:00 am",
             "Discussions":
             [
@@ -176,11 +182,11 @@ Scenario: User request lesson's comments and their discussions Then system send 
         },
         {
             "id": "Comment02",
-            "ClassRoomId": "CR01",
+            "ClassRoomId": "ClassRoom01",
             "CreatedByUserProfileId": "sakul@mindsage.com",
             "Description": "Msg02",
             "TotalLikes": 5,
-            "LessonId": "L02",
+            "LessonId": "Lesson02",
 			"CreatedDate": "2/1/2016 02:00 am",
             "Discussions":
             [

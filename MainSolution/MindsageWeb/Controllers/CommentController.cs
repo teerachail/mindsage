@@ -14,7 +14,7 @@ namespace MindsageWeb.Controllers
         #region Fields
 
         private IClassCalendarRepository _classCalendarRepo;
-        private ISubscriptionRepository _subscriptionRepo;
+        private IUserProfileRepository _userprofileRepo;
         private ICommentRepository _commentRepo;
         private IUserActivityRepository _userActivityRepo;
 
@@ -26,16 +26,16 @@ namespace MindsageWeb.Controllers
         /// Initialize comment controller
         /// </summary>
         /// <param name="classCalendarRepo">Class calendar repository</param>
-        /// <param name="subscriptionRepo">Subscription repository</param>
+        /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="commentRepo">Comment repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
         public CommentController(IClassCalendarRepository classCalendarRepo,
-            ISubscriptionRepository subscriptionRepo,
+            IUserProfileRepository userprofileRepo,
             ICommentRepository commentRepo,
             IUserActivityRepository userActivityRepo)
         {
             _classCalendarRepo = classCalendarRepo;
-            _subscriptionRepo = subscriptionRepo;
+            _userprofileRepo = userprofileRepo;
             _commentRepo = commentRepo;
             _userActivityRepo = userActivityRepo;
         }
@@ -117,8 +117,11 @@ namespace MindsageWeb.Controllers
             var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
             if (!areArgumentsValid) return false;
 
-            var canAccessToTheClass = _subscriptionRepo
-                .GetSubscriptionsByUserProfileId(userprofileId)
+            var selectedUserProfile = _userprofileRepo.GetUserProfileById(userprofileId);
+            if (selectedUserProfile == null) return false;
+
+            var canAccessToTheClass = selectedUserProfile
+                .Subscriptions
                 .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
                 .Any();
 

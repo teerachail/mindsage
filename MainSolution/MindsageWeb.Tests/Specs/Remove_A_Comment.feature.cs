@@ -75,11 +75,11 @@ namespace MindsageWeb.Tests.Specs
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
-    testRunner.And("System have Subscription collection with JSON format are", "[\r\n    {\r\n        \"id\": \"Subscription01\",\r\n        \"UserProfileId\": \"sakul@mindsa" +
-                    "ge.com\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"Role\": \"Teacher\"\r\n    " +
-                    "},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01" +
+                    "\",\r\n\t\"Role\": \"Teacher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Cl" +
+                    "assCalendar01\",\r\n},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 19
+#line 25
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -99,7 +99,7 @@ namespace MindsageWeb.Tests.Specs
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 40
+#line 46
     testRunner.And("System have Comment collection with JSON format are", @"[
     {
         ""Id"": ""Comment01"",
@@ -112,7 +112,7 @@ namespace MindsageWeb.Tests.Specs
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 54
+#line 60
     testRunner.And("System have UserActivity collection with JSON format are", @"[
     {
         ""id"": ""UserActivity01"",
@@ -142,17 +142,17 @@ namespace MindsageWeb.Tests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User remove his comment Then system remove his comment", new string[] {
                         "mock"});
-#line 77
+#line 83
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 78
+#line 84
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 79
+#line 85
     testRunner.When("UserProfileId \'sakul@mindsage.com\' remove the comment \'Comment01\' in the lesson \'" +
                     "Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 80
+#line 86
     testRunner.Then("System Update Comment by JSON format is", @"{
     ""Id"": ""Comment01"",
     ""ClassRoomId"": ""ClassRoom01"",
@@ -163,7 +163,7 @@ this.FeatureBackground();
     ""Discussions"": [],
     ""DeletedDate"": ""2/8/2016 00:00 am""
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 93
+#line 99
     testRunner.And("System doesn\'t update UserActivity collection with JSON format is", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
