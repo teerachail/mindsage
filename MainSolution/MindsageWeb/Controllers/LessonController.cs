@@ -19,7 +19,7 @@ namespace MindsageWeb.Controllers
         private ILikeLessonRepository _likeLessonRepo;
         private ILessonCatalogRepository _lessonCatalogRepo;
         private ICommentRepository _commentRepo;
-        private ICourseFriendRepository _courseFriendRepo;
+        private IFriendRequestRepository _friendRequestRepo;
         private IUserActivityRepository _userActivityRepo;
 
         #endregion Fields
@@ -35,7 +35,7 @@ namespace MindsageWeb.Controllers
         /// <param name="likeLessonRepo">Like lesson repository</param>
         /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
         /// <param name="commentRepo">Comment repository</param>
-        /// <param name="courseFriendRepo">Course friend repository</param>
+        /// <param name="friendRequestRepo">Friend request repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
         public LessonController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
@@ -43,7 +43,7 @@ namespace MindsageWeb.Controllers
             ILikeLessonRepository likeLessonRepo,
             ILessonCatalogRepository lessonCatalogRepo,
             ICommentRepository commentRepo,
-            ICourseFriendRepository courseFriendRepo,
+            IFriendRequestRepository friendRequestRepo,
             IUserActivityRepository userActivityRepo)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -52,7 +52,7 @@ namespace MindsageWeb.Controllers
             _likeLessonRepo = likeLessonRepo;
             _lessonCatalogRepo = lessonCatalogRepo;
             _commentRepo = commentRepo;
-            _courseFriendRepo = courseFriendRepo;
+            _friendRequestRepo = friendRequestRepo;
             _userActivityRepo = userActivityRepo;
         }
 
@@ -125,10 +125,15 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
             if (!canAccessToTheClassLesson) return null;
 
-            var courseFriends = _courseFriendRepo.GetCourseFriendByUserProfile(userId);
-            if (courseFriends == null) return null;
+            var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(userId);
+            if (friendRequests == null) return null;
 
-            var filterByCreatorNames = courseFriends.FriendWith.Union(new string[] { userId });
+            var friendIds = friendRequests
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
+                .Select(it => it.ToUserProfileId);
+
+            var filterByCreatorNames = friendIds.Union(new string[] { userId });
             var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames)
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderByDescending(it => it.CreatedDate)

@@ -20,7 +20,7 @@ namespace MindsageWeb.Tests.Specs.Steps
             var classCalendarRepo = mock.Create<IClassCalendarRepository>();
             var lessonCatalogRepo = mock.Create<ILessonCatalogRepository>();
             var commentRepo = mock.Create<ICommentRepository>();
-            var courseFriendRepo = mock.Create<ICourseFriendRepository>();
+            var friendRequestRepo = mock.Create<IFriendRequestRepository>();
             var userActivityRepo = mock.Create<IUserActivityRepository>();
 
             ScenarioContext.Current.Set(classRoomRepo);
@@ -29,7 +29,7 @@ namespace MindsageWeb.Tests.Specs.Steps
             ScenarioContext.Current.Set(classCalendarRepo);
             ScenarioContext.Current.Set(lessonCatalogRepo);
             ScenarioContext.Current.Set(commentRepo);
-            ScenarioContext.Current.Set(courseFriendRepo);
+            ScenarioContext.Current.Set(friendRequestRepo);
             ScenarioContext.Current.Set(userActivityRepo);
 
             var myCourseCtrl = new LessonController(classCalendarRepo.Object,
@@ -38,7 +38,7 @@ namespace MindsageWeb.Tests.Specs.Steps
                 likeLessonRepo.Object,
                 lessonCatalogRepo.Object,
                 commentRepo.Object,
-                courseFriendRepo.Object,
+                friendRequestRepo.Object,
                 userActivityRepo.Object);
 
             var commentCtrl = new CommentController(classCalendarRepo.Object,

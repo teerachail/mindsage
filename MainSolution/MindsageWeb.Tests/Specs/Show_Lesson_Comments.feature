@@ -53,17 +53,16 @@ Background: Initialize mocking data
 		},
     ]
     """  
-    And System have CourseFriend collection with JSON format are
+    And System have FriendRequest collection with JSON format are
     """
     [
         {
-            "id": "CourseFriend01",
-            "UserProfileId": "sakul@mindsage.com",
-            "ClassRoomId": "ClassRoom01",
-            "FriendWith":
-            [
-                "earn@mindsage.com"
-            ]
+            "id": "FriendRequest01",
+			"FromUserProfileId": "sakul@mindsage.com",
+			"ToUserProfileId": "earn@mindsage.com",
+			"Status": "Friend",
+			"AcceptedDate": "2/1/2016",
+			"CreatedDate": "2/1/2016",
         }
     ]
     """  

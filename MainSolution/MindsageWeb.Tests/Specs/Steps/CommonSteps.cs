@@ -64,13 +64,13 @@ namespace MindsageWeb.Tests.Specs.Steps
                 .Returns<string>(id => lessonCatalogs.Where(it => it.id == id).FirstOrDefault());
         }
 
-        [Given(@"System have CourseFriend collection with JSON format are")]
-        public void GivenSystemHaveCourseFriendCollectionWithJSONFormatAre(string multilineText)
+        [Given(@"System have FriendRequest collection with JSON format are")]
+        public void GivenSystemHaveFriendRequestCollectionWithJSONFormatAre(string multilineText)
         {
-            var courseFriends = JsonConvert.DeserializeObject<IEnumerable<CourseFriend>>(multilineText);
-            var mockCourseFriendRepo = ScenarioContext.Current.Get<Moq.Mock<ICourseFriendRepository>>();
-            mockCourseFriendRepo.Setup(it => it.GetCourseFriendByUserProfile(It.IsAny<string>()))
-                .Returns<string>(id => courseFriends.Where(it => it.UserProfileId == id).FirstOrDefault());
+            var friendRequests = JsonConvert.DeserializeObject<IEnumerable<FriendRequest>>(multilineText);
+            var mockFriendRequestRepo = ScenarioContext.Current.Get<Moq.Mock<IFriendRequestRepository>>();
+            mockFriendRequestRepo.Setup(it => it.GetFriendRequestByUserProfileId(It.IsAny<string>()))
+                .Returns<string>(id => friendRequests.Where(it => it.FromUserProfileId == id));
         }
 
         [Given(@"System have Comment collection with JSON format are")]
