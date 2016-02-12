@@ -203,6 +203,9 @@
     <Compile Include="Repositories\Models\CourseFriend.cs" />
     <Compile Include="Repositories\Models\LessonCatalog.cs" />
     <Compile Include="Repositories\Models\LessonContentRespond.cs" />
+    <Compile Include="Repositories\Models\LikeComment.cs" />
+    <Compile Include="Repositories\Models\LikeContent.cs" />
+    <Compile Include="Repositories\Models\LikeDiscussion.cs" />
     <Compile Include="Repositories\Models\LikeLessonRequest.cs" />
     <Compile Include="Repositories\Models\LikeLesson.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

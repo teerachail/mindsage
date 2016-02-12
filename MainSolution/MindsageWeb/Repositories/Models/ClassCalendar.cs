@@ -20,6 +20,7 @@ namespace MindsageWeb.Repositories.Models
         public DateTime? DeletedDate { get; set; }
 
         public IEnumerable<LessonCalendar> LessonCalendars { get; set; }
+        public IEnumerable<Holiday> Holidays { get; set; }
 
         #endregion Properties
 
@@ -32,6 +33,18 @@ namespace MindsageWeb.Repositories.Models
             public string SemesterGroupName { get; set; }
             public DateTime BeginDate { get; set; }
             public string LessonId { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public DateTime? DeletedDate { get; set; }
+
+            #endregion Properties
+        }
+
+        public class Holiday
+        {
+            #region Properties
+
+            public string id { get; set; }
+            public DateTime HolidayDate { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime? DeletedDate { get; set; }
 

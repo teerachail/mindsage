@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MindsageWeb.Repositories.Models
 {
-    public class LikeLesson : LikeContent
+    public class LikeComment : LikeContent
     {
         #region Properties
 
-        public string ClassRoomId { get; set; }
+        public string CommentId { get; set; }
 
         #endregion Properties
     }
