@@ -33,25 +33,25 @@ namespace MindsageWeb.Tests.Specs.Steps
             };
             commentCtrl.Like(body);
         }
-        
+
         [Then(@"System update total likes for comment '(.*)' in the lesson '(.*)' of ClassRoom '(.*)' to '(.*)' likes")]
         public void ThenSystemUpdateTotalLikesForCommentInTheLessonOfClassRoomToLikes(string commentId, string lessonId, string classRoomId, int totalLikes)
         {
             var mockCommentRepo = ScenarioContext.Current.Get<Moq.Mock<ICommentRepository>>();
-            mockCommentRepo.Verify(it => it.UpsertComment(It.Is<Comment>(comment=>
+            mockCommentRepo.Verify(it => it.UpsertComment(It.Is<Comment>(comment =>
                 comment.id == commentId
                 && comment.LessonId == lessonId
                 && comment.ClassRoomId == classRoomId
                 && comment.TotalLikes == totalLikes
             )));
         }
-        
+
         [Then(@"System add new LikeComment by JSON format is")]
         public void ThenSystemAddNewLikeCommentByJSONFormatIs(string multilineText)
         {
             var expected = JsonConvert.DeserializeObject<LikeComment>(multilineText);
             var mockLikeCommentRepo = ScenarioContext.Current.Get<Moq.Mock<ILikeCommentRepository>>();
-            mockLikeCommentRepo.Verify(it => it.UpsertLikeComment(It.Is<LikeComment>(likeComment=> 
+            mockLikeCommentRepo.Verify(it => it.UpsertLikeComment(It.Is<LikeComment>(likeComment =>
                 !string.IsNullOrEmpty(likeComment.id)
                 && likeComment.LessonId == expected.LessonId
                 && likeComment.CommentId == expected.CommentId
