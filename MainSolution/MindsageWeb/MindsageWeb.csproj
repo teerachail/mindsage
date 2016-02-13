@@ -195,6 +195,7 @@
     <Compile Include="Repositories\IFriendRequestRepository.cs" />
     <Compile Include="Repositories\ILessonCatalogRepository.cs" />
     <Compile Include="Repositories\ILikeCommentRepository.cs" />
+    <Compile Include="Repositories\ILikeDiscussionRepository.cs" />
     <Compile Include="Repositories\ILikeLessonRepository.cs" />
     <Compile Include="Repositories\IUserActivityRepository.cs" />
     <Compile Include="Repositories\IUserProfileRepository.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Repositories\Models\LikeCommentRequest.cs" />
     <Compile Include="Repositories\Models\LikeContent.cs" />
     <Compile Include="Repositories\Models\LikeDiscussion.cs" />
+    <Compile Include="Repositories\Models\LikeDiscussionRequest.cs" />
     <Compile Include="Repositories\Models\LikeLessonRequest.cs" />
     <Compile Include="Repositories\Models\LikeLesson.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

@@ -17,6 +17,7 @@ namespace MindsageWeb.Controllers
         private IUserProfileRepository _userprofileRepo;
         private ICommentRepository _commentRepo;
         private IUserActivityRepository _userActivityRepo;
+        private ILikeDiscussionRepository _likeDiscussionRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -30,16 +31,19 @@ namespace MindsageWeb.Controllers
         /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="commentRepo">Comment repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
+        /// <param name="likeDiscussionRepo">Like discussion repository</param>
         public DiscussionController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             ICommentRepository commentRepo,
             IUserActivityRepository userActivityRepo,
+            ILikeDiscussionRepository likeDiscussionRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
             _userprofileRepo = userprofileRepo;
             _commentRepo = commentRepo;
             _userActivityRepo = userActivityRepo;
+            _likeDiscussionRepo = likeDiscussionRepo;
             _dateTime = dateTime;
         }
 
@@ -90,7 +94,7 @@ namespace MindsageWeb.Controllers
                 CreatorDisplayName = userprofile.Name,
                 CreatorImageUrl = userprofile.ImageProfileUrl,
                 Description = body.Description,
-                CreatedDate =now,
+                CreatedDate = now,
             };
             discussions.Add(newDiscussion);
             selectedComment.Discussions = discussions;
@@ -132,6 +136,84 @@ namespace MindsageWeb.Controllers
             _commentRepo.UpsertComment(selectedComment);
         }
 
+        // POST: api/discussion/like
+        [Route("like")]
+        public void Like(LikeDiscussionRequest body)
+        {
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.CommentId)
+                && !string.IsNullOrEmpty(body.DiscussionId)
+                && !string.IsNullOrEmpty(body.UserProfileId)
+                && !string.IsNullOrEmpty(body.LessonId);
+            if (!areArgumentsValid) return;
+
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
+            if (!canAccessToTheClassRoom) return;
+
+            var now = _dateTime.GetCurrentTime();
+            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            if (!canAccessToTheClassLesson) return;
+
+            var selectedComment = _commentRepo.GetCommentById(body.CommentId);
+            if (selectedComment == null) return;
+            var selectedDiscussion = selectedComment.Discussions.FirstOrDefault(it => it.id.Equals(body.DiscussionId, StringComparison.CurrentCultureIgnoreCase));
+            if (selectedDiscussion == null) return;
+
+            var likeDiscussions = _likeDiscussionRepo.GetLikeDiscussionByDiscusionId(body.DiscussionId)
+                .Where(it => !it.DeletedDate.HasValue)
+                .ToList();
+
+            var likedDiscussionsByThisUser = likeDiscussions
+                .Where(it => it.LikedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase));
+
+            var isUnlike = likedDiscussionsByThisUser.Any();
+            if (isUnlike)
+            {
+                foreach (var item in likedDiscussionsByThisUser)
+                {
+                    item.DeletedDate = now;
+                    _likeDiscussionRepo.UpsertLikeDiscussion(item);
+                }
+            }
+            else
+            {
+                var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
+                if (!isCommentOwner)
+                {
+                    var canLikeThisComment = checkAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
+                    if (!canLikeThisComment) return;
+                }
+
+                var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileId, body.ClassRoomId);
+                if (selectedUserActivity == null) return;
+                var selectedLessonActivity = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId.Equals(body.LessonId));
+                if (selectedLessonActivity == null) return;
+                selectedLessonActivity.ParticipationAmount++;
+                _userActivityRepo.UpsertUserActivity(selectedUserActivity);
+
+                var newLike = new LikeDiscussion
+                {
+                    id = Guid.NewGuid().ToString(),
+                    LessonId = body.LessonId,
+                    CommentId = body.CommentId,
+                    DiscussionId = body.DiscussionId,
+                    LikedByUserProfileId = body.UserProfileId,
+                    CreatedDate = now
+                };
+                likeDiscussions.Add(newLike);
+                _likeDiscussionRepo.UpsertLikeDiscussion(newLike);
+            }
+
+            selectedDiscussion.TotalLikes = likeDiscussions.Where(it => !it.DeletedDate.HasValue).Count();
+            _commentRepo.UpsertComment(selectedComment);
+        }
+
+        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
+        {
+            UserProfile userprofile;
+            return checkAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out userprofile);
+        }
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId, out UserProfile userprofile)
         {
             userprofile = null;

@@ -31,6 +31,7 @@ namespace MindsageWeb.Controllers
         /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="commentRepo">Comment repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
+        /// <param name="likeCommentRepo">Like comment repository</param>
         public CommentController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             ICommentRepository commentRepo,
@@ -140,7 +141,7 @@ namespace MindsageWeb.Controllers
             var selectedComment = _commentRepo.GetCommentById(body.CommentId);
             if (selectedComment == null) return;
 
-            var likeComments = _likeCommentRepo.GetLikeCommentByLessonId(body.LessonId)
+            var likeComments = _likeCommentRepo.GetLikeCommentByCommentId(body.CommentId)
                 .Where(it => !it.DeletedDate.HasValue)
                 .ToList();
 

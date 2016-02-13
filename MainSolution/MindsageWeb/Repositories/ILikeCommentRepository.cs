@@ -15,10 +15,10 @@ namespace MindsageWeb.Repositories
         #region Methods
 
         /// <summary>
-        /// ขอข้อมูลการ like comment จากรหัส lesson
+        /// ขอข้อมูลการ like comment จากรหัส comment
         /// </summary>
-        /// <param name="lessonId">รหัส lesson ที่ต้องการขอข้อมูล</param>
-        IEnumerable<LikeComment> GetLikeCommentByLessonId(string lessonId);
+        /// <param name="commentId">รหัส comment ที่ต้องการขอข้อมูล</param>
+        IEnumerable<LikeComment> GetLikeCommentByCommentId(string commentId);
 
         /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูล like lesson

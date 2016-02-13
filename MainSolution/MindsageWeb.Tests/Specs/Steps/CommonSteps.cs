@@ -99,8 +99,17 @@ namespace MindsageWeb.Tests.Specs.Steps
         {
             var likeComments = JsonConvert.DeserializeObject<IEnumerable<LikeComment>>(multilineText);
             var mockLikeCommentRepo = ScenarioContext.Current.Get<Moq.Mock<ILikeCommentRepository>>();
-            mockLikeCommentRepo.Setup(it => it.GetLikeCommentByLessonId(It.IsAny<string>()))
-                .Returns<string>(lessonId => likeComments.Where(it => it.LessonId == lessonId));
+            mockLikeCommentRepo.Setup(it => it.GetLikeCommentByCommentId(It.IsAny<string>()))
+                .Returns<string>(id => likeComments.Where(it => it.CommentId == id));
+        }
+
+        [Given(@"System have LikeDiscussion collection with JSON format are")]
+        public void GivenSystemHaveLikeDiscussionCollectionWithJSONFormatAre(string multilineText)
+        {
+            var likeDiscussions = JsonConvert.DeserializeObject<IEnumerable<LikeDiscussion>>(multilineText);
+            var mockLikeDiscussionRepo = ScenarioContext.Current.Get<Moq.Mock<ILikeDiscussionRepository>>();
+            mockLikeDiscussionRepo.Setup(it => it.GetLikeDiscussionByDiscusionId(It.IsAny<string>()))
+                .Returns<string>(id => likeDiscussions.Where(it => it.DiscussionId == id));
         }
     }
 }
