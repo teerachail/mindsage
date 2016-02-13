@@ -10,6 +10,8 @@ Background: Initialize mocking data
     [
 		{
 			"id": "sakul@mindsage.com",
+			"Name": "Sakul jaruthanaset",
+			"ImageProfileUrl": "ImgURL01",
 			"Subscriptions":
 			[
 				{
@@ -75,7 +77,7 @@ Background: Initialize mocking data
 						"Content01"
 					],
 					"CreatedCommentAmount": 0,
-					"SendLikesAmount": 1
+					"ParticipationAmount": 1
 				}
 			]
 		}
@@ -91,6 +93,8 @@ Scenario: User create a new comment Then system create a new comment
     {
         "ClassRoomId": "ClassRoom01",
         "CreatedByUserProfileId": "sakul@mindsage.com",
+		"CreatorDisplayName": "Sakul jaruthanaset",
+		"CreatorImageUrl": "ImgURL01",
         "Description": "Hello lesson 1",
         "TotalLikes": 0,
         "LessonId": "Lesson01",
@@ -115,7 +119,7 @@ Scenario: User create a new comment Then system create a new comment
 					"Content01"
 				],
 				"CreatedCommentAmount": 1,
-				"SendLikesAmount": 1
+				"ParticipationAmount": 1
 			}
 		]
 	}

@@ -34,7 +34,7 @@ namespace MindsageWeb.Repositories.Models
             public int TotalContentsAmount { get; set; }
             public IEnumerable<string> SawContentIds { get; set; }
             public int CreatedCommentAmount { get; set; }
-            public int SendLikesAmount { get; set; }
+            public int ParticipationAmount { get; set; }
             public string LessonId { get; set; }
 
             #endregion Properties

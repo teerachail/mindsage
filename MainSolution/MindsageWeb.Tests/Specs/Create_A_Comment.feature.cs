@@ -75,11 +75,12 @@ namespace MindsageWeb.Tests.Specs
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
-    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01" +
-                    "\",\r\n\t\"Role\": \"Teacher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Cl" +
-                    "assCalendar01\",\r\n},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"Sakul jaruthanaset\",\r\n\"ImageProfileUr" +
+                    "l\": \"ImgURL01\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Tea" +
+                    "cher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n" +
+                    "},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 25
+#line 27
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -112,7 +113,7 @@ namespace MindsageWeb.Tests.Specs
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 59
+#line 61
     testRunner.And("System have UserActivity collection with JSON format are", @"   [
 	{
 		""id"": ""UserActivity01"",
@@ -130,7 +131,7 @@ namespace MindsageWeb.Tests.Specs
 					""Content01""
 				],
 				""CreatedCommentAmount"": 0,
-				""SendLikesAmount"": 1
+				""ParticipationAmount"": 1
 			}
 		]
 	}
@@ -146,22 +147,29 @@ namespace MindsageWeb.Tests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create a new comment Then system create a new comment", new string[] {
                         "mock"});
-#line 86
+#line 88
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 87
+#line 89
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 88
+#line 90
     testRunner.When("UserProfileId \'sakul@mindsage.com\' create a new comment with a message is \'Hello " +
                     "lesson 1\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 89
-    testRunner.Then("System add new Comment by JSON format is", "{\r\n    \"ClassRoomId\": \"ClassRoom01\",\r\n    \"CreatedByUserProfileId\": \"sakul@mindsa" +
-                    "ge.com\",\r\n    \"Description\": \"Hello lesson 1\",\r\n    \"TotalLikes\": 0,\r\n    \"Lesso" +
-                    "nId\": \"Lesson01\",\r\n    \"Discussions\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 91
+    testRunner.Then("System add new Comment by JSON format is", @"{
+    ""ClassRoomId"": ""ClassRoom01"",
+    ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
+""CreatorDisplayName"": ""Sakul jaruthanaset"",
+""CreatorImageUrl"": ""ImgURL01"",
+    ""Description"": ""Hello lesson 1"",
+    ""TotalLikes"": 0,
+    ""LessonId"": ""Lesson01"",
+    ""Discussions"": []
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 100
+#line 104
     testRunner.And("System update UserActivity collection with JSON format is", @"{
 ""id"": ""UserActivity01"",
 ""UserProfileId"": ""sakul@mindsage.com"",
@@ -178,7 +186,7 @@ this.FeatureBackground();
 	""Content01""
 ],
 ""CreatedCommentAmount"": 1,
-""SendLikesAmount"": 1
+""ParticipationAmount"": 1
 }
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");

@@ -25,7 +25,7 @@ namespace MindsageWeb.Tests.Specs.Steps
                 ClassRoomId = classRoomId,
                 Description = message,
                 LessonId = lessonId,
-                UserProfileName = userprofile
+                UserProfileId = userprofile
             };
 
             var commentCtrl = ScenarioContext.Current.Get<CommentController>();
@@ -38,11 +38,13 @@ namespace MindsageWeb.Tests.Specs.Steps
             var expected = JsonConvert.DeserializeObject<Comment>(multilineText);
             var mockCommentRepo = ScenarioContext.Current.Get<Mock<ICommentRepository>>();
             mockCommentRepo.Verify(it => it.UpsertComment(It.Is<Comment>(comment =>
-                comment.ClassRoomId == expected.ClassRoomId
+                !string.IsNullOrEmpty(comment.id)
+                && comment.ClassRoomId == expected.ClassRoomId
                 && comment.CreatedByUserProfileId == expected.CreatedByUserProfileId
                 && comment.Description == expected.Description
                 && comment.TotalLikes == 0
                 && comment.LessonId == expected.LessonId
+                && !comment.DeletedDate.HasValue
                 && comment.CreatorDisplayName == expected.CreatorDisplayName
                 && comment.CreatorImageUrl == expected.CreatorImageUrl
             )));

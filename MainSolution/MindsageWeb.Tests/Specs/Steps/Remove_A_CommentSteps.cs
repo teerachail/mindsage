@@ -22,7 +22,7 @@ namespace MindsageWeb.Tests.Specs.Steps
             {
                 ClassRoomId = classRoomId,
                 LessonId = lessonId,
-                UserProfileName = userprofileName
+                UserProfileId = userprofileName
             };
             commentCtrl.Put(commentId, body);
         }
@@ -40,8 +40,8 @@ namespace MindsageWeb.Tests.Specs.Steps
                 && comment.TotalLikes == expected.TotalLikes
                 && comment.LessonId == expected.LessonId
                 && comment.DeletedDate.HasValue
-            //comment.CreatorDisplayName // TODO: Show CreatorDisplayName
-            //comment.CreatorImageUrl // TODO: Show CreatorImageUrl
+                && comment.CreatorDisplayName == expected.CreatorDisplayName 
+                && comment.CreatorImageUrl == expected.CreatorImageUrl
             )));
         }
 

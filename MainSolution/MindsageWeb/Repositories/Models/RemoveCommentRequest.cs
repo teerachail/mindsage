@@ -12,7 +12,7 @@ namespace MindsageWeb.Repositories.Models
 
         public string ClassRoomId { get; set; }
         public string LessonId { get; set; }
-        public string UserProfileName { get; set; }
+        public string UserProfileId { get; set; }
 
         #endregion Properties
     }

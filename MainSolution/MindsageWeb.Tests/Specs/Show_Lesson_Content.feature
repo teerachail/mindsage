@@ -125,7 +125,7 @@ Background: Initialize mocking data
 					"TotalContentsAmount": 1,
 					"SawContentIds": [ ],
 					"CreatedCommentAmount": 0,
-					"SendLikesAmount": 0
+					"ParticipationAmount": 0
 				},
 				{
 					"id": "LessonActivity02",
@@ -134,7 +134,7 @@ Background: Initialize mocking data
 					"TotalContentsAmount": 1,
 					"SawContentIds": [ ],
 					"CreatedCommentAmount": 0,
-					"SendLikesAmount": 0
+					"ParticipationAmount": 0
 				}
 			]
 		}
@@ -172,7 +172,7 @@ Scenario: User open a course's lesson Then system send the selected lesson's con
 				"TotalContentsAmount": 1,
 				"SawContentIds": [ ],
 				"CreatedCommentAmount": 0,
-				"SendLikesAmount": 0
+				"ParticipationAmount": 0
 			},
 			{
 				"id": "LessonActivity02",
@@ -184,7 +184,7 @@ Scenario: User open a course's lesson Then system send the selected lesson's con
 					"PrimaryContent02"
 				],
 				"CreatedCommentAmount": 0,
-				"SendLikesAmount": 0
+				"ParticipationAmount": 0
 			}
 		]
 	}

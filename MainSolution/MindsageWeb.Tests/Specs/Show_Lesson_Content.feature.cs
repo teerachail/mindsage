@@ -178,7 +178,7 @@ namespace MindsageWeb.Tests.Specs
 	""TotalContentsAmount"": 1,
 	""SawContentIds"": [ ],
 	""CreatedCommentAmount"": 0,
-	""SendLikesAmount"": 0
+	""ParticipationAmount"": 0
 },
 {
 	""id"": ""LessonActivity02"",
@@ -187,7 +187,7 @@ namespace MindsageWeb.Tests.Specs
 	""TotalContentsAmount"": 1,
 	""SawContentIds"": [ ],
 	""CreatedCommentAmount"": 0,
-	""SendLikesAmount"": 0
+	""ParticipationAmount"": 0
 }
 ]
 }
@@ -238,7 +238,7 @@ this.FeatureBackground();
 ""TotalContentsAmount"": 1,
 ""SawContentIds"": [ ],
 ""CreatedCommentAmount"": 0,
-""SendLikesAmount"": 0
+""ParticipationAmount"": 0
 },
 {
 ""id"": ""LessonActivity02"",
@@ -250,7 +250,7 @@ this.FeatureBackground();
 	""PrimaryContent02""
 ],
 ""CreatedCommentAmount"": 0,
-""SendLikesAmount"": 0
+""ParticipationAmount"": 0
 }
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");

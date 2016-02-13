@@ -10,6 +10,8 @@ Background: Initialize mocking data
     [
 		{
 			"id": "sakul@mindsage.com",
+			"Name": "Sakul jaruthanaset",
+			"ImageProfileUrl": "ImgURL01",
 			"Subscriptions":
 			[
 				{
@@ -111,7 +113,7 @@ Background: Initialize mocking data
 						"Content01"
 					],
 					"CreatedCommentAmount": 0,
-					"SendLikesAmount": 0
+					"ParticipationAmount": 0
 				}
 			]
 		}
@@ -149,7 +151,7 @@ Scenario: User click like lesson Then system update lesson's total like
 					"Content01"
 				],
 				"CreatedCommentAmount": 0,
-				"SendLikesAmount": 1
+				"ParticipationAmount": 1
 			}
 		]
 	}

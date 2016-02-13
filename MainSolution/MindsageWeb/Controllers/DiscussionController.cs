@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace MindsageWeb.Controllers
 {
-    public class CommentController : ApiController
+    public class DiscussionController : ApiController
     {
         #region Fields
 
@@ -23,13 +23,13 @@ namespace MindsageWeb.Controllers
         #region Constructors
 
         /// <summary>
-        /// Initialize comment controller
+        /// Initialize discussion controller
         /// </summary>
         /// <param name="classCalendarRepo">Class calendar repository</param>
         /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="commentRepo">Comment repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
-        public CommentController(IClassCalendarRepository classCalendarRepo,
+        public DiscussionController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             ICommentRepository commentRepo,
             IUserActivityRepository userActivityRepo)
@@ -44,11 +44,12 @@ namespace MindsageWeb.Controllers
 
         #region Methods
 
-        // POST: api/comment
-        public void Post(PostNewCommentRequest body)
+        // POST: api/Discussion
+        public void Post(PostNewDiscussionRequest body)
         {
             var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.CommentId)
                 && !string.IsNullOrEmpty(body.Description)
                 && !string.IsNullOrEmpty(body.LessonId)
                 && !string.IsNullOrEmpty(body.UserProfileId);
@@ -62,62 +63,40 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
+            var selectedComment = _commentRepo.GetCommentById(body.CommentId);
+            if (selectedComment == null) return;
+
             var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileId, body.ClassRoomId);
             if (selectedUserActivity == null) return;
 
             var selectedLesson = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId == body.LessonId);
             if (selectedLesson == null) return;
 
-            var newComment = new Comment
+            var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
+            if (!isCommentOwner)
+            {
+                var canPostNewDiscussion = checkAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
+                if (!canPostNewDiscussion) return;
+            }
+
+            var discussions = selectedComment.Discussions.ToList();
+            var newDiscussion = new Comment.Discussion
             {
                 id = Guid.NewGuid().ToString(),
-                ClassRoomId = body.ClassRoomId,
                 CreatedByUserProfileId = body.UserProfileId,
-                Description = body.Description,
-                LessonId = body.LessonId,
-                CreatedDate = now,
                 CreatorDisplayName = userprofile.Name,
                 CreatorImageUrl = userprofile.ImageProfileUrl,
-                Discussions = Enumerable.Empty<Comment.Discussion>(),
+                Description = body.Description,
+                CreatedDate =now,
             };
-            _commentRepo.UpsertComment(newComment);
+            discussions.Add(newDiscussion);
+            selectedComment.Discussions = discussions;
+            _commentRepo.UpsertComment(selectedComment);
 
-            selectedLesson.CreatedCommentAmount++;
+            selectedLesson.ParticipationAmount++;
             _userActivityRepo.UpsertUserActivity(selectedUserActivity);
         }
 
-        // PUT: api/comment/{comment-id}
-        public void Put(string id, RemoveCommentRequest body)
-        {
-            var areArgumentsValid = !string.IsNullOrEmpty(id)
-                && body != null
-                && !string.IsNullOrEmpty(body.ClassRoomId)
-                && !string.IsNullOrEmpty(body.LessonId)
-                && !string.IsNullOrEmpty(body.UserProfileId);
-            if (!areArgumentsValid) return;
-
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
-            if (!canAccessToTheClassRoom) return;
-
-            var now = DateTime.Now;
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
-            if (!canAccessToTheClassLesson) return;
-
-            var selectedComment = _commentRepo.GetCommentById(id);
-            if (selectedComment == null) return;
-
-            var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
-            if (!isCommentOwner) return;
-
-            selectedComment.DeletedDate = now;
-            _commentRepo.UpsertComment(selectedComment);
-        }
-
-        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
-        {
-            UserProfile userprofile;
-            return checkAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out userprofile);
-        }
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId, out UserProfile userprofile)
         {
             userprofile = null;
@@ -150,32 +129,39 @@ namespace MindsageWeb.Controllers
                 .Any();
             return canAccessToTheLesson;
         }
+        private bool checkAccessPermissionToUserProfile(string userprofileId)
+        {
+            var selectedCommentOwnerProfile = _userprofileRepo.GetUserProfileById(userprofileId);
+            var canPostNewDiscussion = selectedCommentOwnerProfile != null
+                && !selectedCommentOwnerProfile.IsPrivateAccount;
+            return canPostNewDiscussion;
+        }
 
         #endregion Methods
 
-        //// GET: api/Comment
+        //// GET: api/Discussion
         //public IEnumerable<string> Get()
         //{
         //    return new string[] { "value1", "value2" };
         //}
 
-        //// GET: api/Comment/5
+        //// GET: api/Discussion/5
         //public string Get(int id)
         //{
         //    return "value";
         //}
 
-        //// POST: api/Comment
+        //// POST: api/Discussion
         //public void Post([FromBody]string value)
         //{
         //}
 
-        //// PUT: api/Comment/5
+        //// PUT: api/Discussion/5
         //public void Put(int id, [FromBody]string value)
         //{
         //}
 
-        //// DELETE: api/Comment/5
+        //// DELETE: api/Discussion/5
         //public void Delete(int id)
         //{
         //}

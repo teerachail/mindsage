@@ -118,7 +118,7 @@ Background: Initialize mocking data
 						"Content01"
 					],
 					"CreatedCommentAmount": 0,
-					"SendLikesAmount": 1
+					"ParticipationAmount": 1
 				}
 			]
 		}

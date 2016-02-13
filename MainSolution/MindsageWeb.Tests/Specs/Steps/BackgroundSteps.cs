@@ -46,8 +46,14 @@ namespace MindsageWeb.Tests.Specs.Steps
                 commentRepo.Object,
                 userActivityRepo.Object);
 
+            var discussionCtrl = new DiscussionController(classCalendarRepo.Object,
+                userprofileRepo.Object,
+                commentRepo.Object,
+                userActivityRepo.Object);
+
             ScenarioContext.Current.Set(myCourseCtrl);
             ScenarioContext.Current.Set(commentCtrl);
+            ScenarioContext.Current.Set(discussionCtrl);
         }
     }
 }

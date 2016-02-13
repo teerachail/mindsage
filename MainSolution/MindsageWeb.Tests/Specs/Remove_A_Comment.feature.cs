@@ -130,7 +130,7 @@ namespace MindsageWeb.Tests.Specs
 		""Content01""
 	],
 	""CreatedCommentAmount"": 1,
-	""SendLikesAmount"": 1
+	""ParticipationAmount"": 1
 }
 ]
 }

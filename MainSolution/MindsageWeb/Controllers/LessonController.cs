@@ -205,7 +205,7 @@ namespace MindsageWeb.Controllers
                 if (selectedUserActivity == null) return;
                 var selectedLessonActivity = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId.Equals(body.LessonId));
                 if (selectedLessonActivity == null) return;
-                selectedLessonActivity.SendLikesAmount++;
+                selectedLessonActivity.ParticipationAmount++;
                 _userActivityRepo.UpsertUserActivity(selectedUserActivity);
 
                 var newLike = new LikeLesson
