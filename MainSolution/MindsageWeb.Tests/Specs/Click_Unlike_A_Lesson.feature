@@ -126,7 +126,7 @@ Background: Initialize mocking data
     """  
 
 @mock  
-Scenario: User click like lesson Then system update lesson's total like  
+Scenario: User click unlike a lesson Then system update lesson's total like  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfileId 'sakul@mindsage.com' click the like button in the lesson 'Lesson01' of ClassRoom: 'ClassRoom01'  
     Then System update total likes in the lesson 'Lesson01' of ClassRoom 'ClassRoom01' to '1' likes   

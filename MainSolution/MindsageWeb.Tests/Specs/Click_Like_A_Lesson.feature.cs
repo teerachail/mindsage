@@ -168,12 +168,12 @@ namespace MindsageWeb.Tests.Specs
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("User click like lesson Then system update lesson\'s total like")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("User click like a lesson Then system update lesson\'s total like")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Click-like-a-lesson")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mock")]
-        public virtual void UserClickLikeLessonThenSystemUpdateLessonSTotalLike()
+        public virtual void UserClickLikeALessonThenSystemUpdateLessonSTotalLike()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User click like lesson Then system update lesson\'s total like", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User click like a lesson Then system update lesson\'s total like", new string[] {
                         "mock"});
 #line 124
 this.ScenarioSetup(scenarioInfo);
