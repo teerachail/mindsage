@@ -190,13 +190,13 @@ namespace MindsageWeb.Controllers
                 .ToList();
             if (likeLessons == null) return;
 
-            var likedLessonsByUser = likeLessons
+            var likedLessonsByThisUser = likeLessons
                 .Where(it => it.LikedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase));
 
-            var isUnlike = likedLessonsByUser.Any();
+            var isUnlike = likedLessonsByThisUser.Any();
             if (isUnlike)
             {
-                foreach (var item in likedLessonsByUser)
+                foreach (var item in likedLessonsByThisUser)
                 {
                     item.DeletedDate = now;
                     _likeLessonRepo.UpsertLikeLesson(item);

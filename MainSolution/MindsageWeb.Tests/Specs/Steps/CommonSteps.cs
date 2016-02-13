@@ -93,5 +93,14 @@ namespace MindsageWeb.Tests.Specs.Steps
             mockUserActivityRepo.Setup(it => it.GetUserActivityByUserProfileIdAndClassRoomId(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns<string, string>((userprofile, classRoomId) => userActivities.FirstOrDefault(it => it.UserProfileId == userprofile && it.ClassRoomId == classRoomId));
         }
+
+        [Given(@"System have LikeComment collection with JSON format are")]
+        public void GivenSystemHaveLikeCommentCollectionWithJSONFormatAre(string multilineText)
+        {
+            var likeComments = JsonConvert.DeserializeObject<IEnumerable<LikeComment>>(multilineText);
+            var mockLikeCommentRepo = ScenarioContext.Current.Get<Moq.Mock<ILikeCommentRepository>>();
+            mockLikeCommentRepo.Setup(it => it.GetLikeCommentByLessonId(It.IsAny<string>()))
+                .Returns<string>(lessonId => likeComments.Where(it => it.LessonId == lessonId));
+        }
     }
 }

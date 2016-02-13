@@ -98,7 +98,7 @@ Background: Initialize mocking data
             "CreatedDate": "2/1/2016",
         },
     ]
-    """
+    """  
 	And System have UserActivity collection with JSON format are
 	"""
     [
