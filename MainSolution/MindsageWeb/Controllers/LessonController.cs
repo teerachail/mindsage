@@ -21,6 +21,7 @@ namespace MindsageWeb.Controllers
         private ICommentRepository _commentRepo;
         private IFriendRequestRepository _friendRequestRepo;
         private IUserActivityRepository _userActivityRepo;
+        private IDateTime _dateTime;
 
         #endregion Fields
 
@@ -44,7 +45,8 @@ namespace MindsageWeb.Controllers
             ILessonCatalogRepository lessonCatalogRepo,
             ICommentRepository commentRepo,
             IFriendRequestRepository friendRequestRepo,
-            IUserActivityRepository userActivityRepo)
+            IUserActivityRepository userActivityRepo,
+            IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
             _userprofileRepo = userprofileRepo;
@@ -54,6 +56,7 @@ namespace MindsageWeb.Controllers
             _commentRepo = commentRepo;
             _friendRequestRepo = friendRequestRepo;
             _userActivityRepo = userActivityRepo;
+            _dateTime = dateTime;
         }
 
         #endregion Constructors
@@ -73,7 +76,7 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId, out subscription);
             if (!canAccessToTheClassRoom) return null;
 
-            var now = DateTime.Now;
+            var now = _dateTime.GetCurrentTime();
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
             if (!canAccessToTheClassLesson) return null;
 
@@ -135,7 +138,7 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId);
             if (!canAccessToTheClassRoom) return null;
 
-            var now = DateTime.Now;
+            var now = _dateTime.GetCurrentTime();
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
             if (!canAccessToTheClassLesson) return null;
 
@@ -174,7 +177,7 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
             if (!canAccessToTheClassRoom) return;
 
-            var now = DateTime.Now;
+            var now = _dateTime.GetCurrentTime();
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 

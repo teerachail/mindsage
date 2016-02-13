@@ -1,4 +1,4 @@
-﻿Feature: Create_A_Discussion
+﻿Feature: Remove_A_Discussion
 	In order to avoid silly mistakes
 	As a math idiot
 	I want to be told the sum of two numbers
@@ -10,8 +10,6 @@ Background: Initialize mocking data
     [
 		{
 			"id": "sakul@mindsage.com",
-			"Name": "Sakul jaruthanaset",
-			"ImageProfileUrl": "ImgURL01",
 			"Subscriptions":
 			[
 				{
@@ -55,7 +53,17 @@ Background: Initialize mocking data
             "Description": "Hello lesson 1",
             "TotalLikes": 0,
             "LessonId": "Lesson01",
-            "Discussions": []
+            "Discussions":
+			[
+				{
+					"id": "Discussion01",
+					"Description": "This is a discussion",
+					"TotalLikes": 0,
+					"CreatorImageUrl": "ImgURL01",
+					"CreatorDisplayName": "Sakul jaruthanaset",
+					"CreatedByUserProfileId": "sakul@mindsage.com",
+				}
+			]
         }
     ]
     """ 
@@ -78,50 +86,29 @@ Background: Initialize mocking data
 						"Content01"
 					],
 					"CreatedCommentAmount": 1,
-					"ParticipationAmount": 0
+					"ParticipationAmount": 1
 				}
 			]
 		}
     ]
     """  
-
+    
 @mock  
-Scenario: User create a new discussion Then system create a new discussion  
+Scenario: User remove his comment Then system remove his comment  
     Given Today is '2/8/2016 00:00 am'  
-    When UserProfileId 'sakul@mindsage.com' create a new discussion with a message is 'This is a discussion' for comment 'Comment01' in the lesson 'Lesson01' of ClassRoom: 'ClassRoom01'  
-    Then System update Discussion collection with JSON format in the Comment 'Comment01' are
+    When UserProfileId 'sakul@mindsage.com' remove the discussion 'Discussion01' from comment 'Comment01' in the lesson 'Lesson01' of ClassRoom: 'ClassRoom01'  
+	Then System update Discussion collection with JSON format in the Comment 'Comment01' are
     """
     [
 		{
+			"id": "Discussion01",
 			"Description": "This is a discussion",
 			"TotalLikes": 0,
 			"CreatorImageUrl": "ImgURL01",
 			"CreatorDisplayName": "Sakul jaruthanaset",
 			"CreatedByUserProfileId": "sakul@mindsage.com",
-			"CreatedDate": "2/8/2016 00:00 am"
+			"DeletedDate": "2/8/2016 00:00 am"
 		}
 	]
     """  
-    And System update UserActivity collection with JSON format is
-    """
-    {
-		"id": "UserActivity01",
-		"UserProfileId": "sakul@mindsage.com",
-		"ClassRoomId": "ClassRoom01",
-		"LessonActivities":
-		[
-			{
-				"id": "LessonActivity01",
-				"LessonId": "Lesson01",
-
-				"TotalContentsAmount": 1,
-				"SawContentIds": 
-				[
-					"Content01"
-				],
-				"CreatedCommentAmount": 1,
-				"ParticipationAmount": 1
-			}
-		]
-	}
-    """  
+    And System doesn't update UserActivity collection with JSON format is  

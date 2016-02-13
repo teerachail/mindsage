@@ -52,6 +52,7 @@ namespace MindsageWeb.Tests.Specs.Steps
                 ll.ClassRoomId == expected.ClassRoomId
                 && ll.LessonId == expected.LessonId
                 && ll.LikedByUserProfileId == expected.LikedByUserProfileId
+                && ll.CreatedDate == expected.CreatedDate
                 && !ll.DeletedDate.HasValue
             )));
         }

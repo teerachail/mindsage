@@ -49,12 +49,13 @@ namespace MindsageWeb.Tests.Specs.Steps
                 for (int elementIndex = 0; elementIndex < expected.Count; elementIndex++)
                 {
                     var areArgumentsVerify = !string.IsNullOrEmpty(actualDiscussion[elementIndex].id)
-                        && !actualDiscussion[elementIndex].DeletedDate.HasValue
                         && expected[elementIndex].CreatedByUserProfileId == actualDiscussion[elementIndex].CreatedByUserProfileId
                         && expected[elementIndex].CreatorDisplayName == actualDiscussion[elementIndex].CreatorDisplayName
                         && expected[elementIndex].CreatorImageUrl == actualDiscussion[elementIndex].CreatorImageUrl
                         && expected[elementIndex].Description == actualDiscussion[elementIndex].Description
-                        && expected[elementIndex].TotalLikes == actualDiscussion[elementIndex].TotalLikes;
+                        && expected[elementIndex].TotalLikes == actualDiscussion[elementIndex].TotalLikes
+                        && expected[elementIndex].CreatedDate == actualDiscussion[elementIndex].CreatedDate
+                        && expected[elementIndex].DeletedDate == actualDiscussion[elementIndex].DeletedDate;
                     if (!areArgumentsVerify) return false;
                 }
                 return true;

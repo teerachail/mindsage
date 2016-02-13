@@ -191,6 +191,7 @@
     <Compile Include="Repositories\IClassCalendarRepository.cs" />
     <Compile Include="Repositories\IClassRoomRepository.cs" />
     <Compile Include="Repositories\ICommentRepository.cs" />
+    <Compile Include="Repositories\IDateTime.cs" />
     <Compile Include="Repositories\IFriendRequestRepository.cs" />
     <Compile Include="Repositories\ILessonCatalogRepository.cs" />
     <Compile Include="Repositories\ILikeLessonRepository.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Repositories\Models\PostNewCommentRequest.cs" />
     <Compile Include="Repositories\Models\PostNewDiscussionRequest.cs" />
     <Compile Include="Repositories\Models\RemoveCommentRequest.cs" />
+    <Compile Include="Repositories\Models\RemoveDiscussionRequest.cs" />
     <Compile Include="Repositories\Models\UserActivity.cs" />
     <Compile Include="Repositories\Models\UserProfile.cs" />
     <Compile Include="Startup.cs" />

@@ -19,7 +19,7 @@ namespace MindsageWeb.Tests.Specs.Steps
                 ll.ClassRoomId == expected.ClassRoomId
                 && ll.LessonId == expected.LessonId
                 && ll.LikedByUserProfileId == expected.LikedByUserProfileId
-                && ll.DeletedDate.HasValue
+                && ll.DeletedDate == expected.DeletedDate
             )));
         }
     }

@@ -34,7 +34,8 @@ namespace MindsageWeb.Tests.Specs.Steps
         [Given(@"Today is '(.*)'")]
         public void GivenTodayIs(DateTime currentTime)
         {
-            ScenarioContext.Current.Set(currentTime);
+            var mockDateTime = ScenarioContext.Current.Get<Mock<IDateTime>>();
+            mockDateTime.Setup(it => it.GetCurrentTime()).Returns(currentTime);
         }
 
         [Given(@"System have ClassRoom collection with JSON format are")]

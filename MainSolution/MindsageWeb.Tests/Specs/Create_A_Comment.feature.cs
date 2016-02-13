@@ -166,10 +166,11 @@ this.FeatureBackground();
     ""Description"": ""Hello lesson 1"",
     ""TotalLikes"": 0,
     ""LessonId"": ""Lesson01"",
-    ""Discussions"": []
+    ""Discussions"": [],
+""CreatedDate"": ""2/8/2016 00:00 am""
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 104
+#line 105
     testRunner.And("System update UserActivity collection with JSON format is", @"{
 ""id"": ""UserActivity01"",
 ""UserProfileId"": ""sakul@mindsage.com"",

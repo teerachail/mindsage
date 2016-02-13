@@ -39,7 +39,7 @@ namespace MindsageWeb.Tests.Specs.Steps
                 && comment.Description == expected.Description
                 && comment.TotalLikes == expected.TotalLikes
                 && comment.LessonId == expected.LessonId
-                && comment.DeletedDate.HasValue
+                && comment.DeletedDate == expected.DeletedDate
                 && comment.CreatorDisplayName == expected.CreatorDisplayName 
                 && comment.CreatorImageUrl == expected.CreatorImageUrl
             )));

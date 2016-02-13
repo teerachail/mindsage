@@ -17,6 +17,7 @@ namespace MindsageWeb.Controllers
         private IUserProfileRepository _userprofileRepo;
         private ICommentRepository _commentRepo;
         private IUserActivityRepository _userActivityRepo;
+        private IDateTime _dateTime;
 
         #endregion Fields
 
@@ -32,12 +33,14 @@ namespace MindsageWeb.Controllers
         public CommentController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             ICommentRepository commentRepo,
-            IUserActivityRepository userActivityRepo)
+            IUserActivityRepository userActivityRepo,
+            IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
             _userprofileRepo = userprofileRepo;
             _commentRepo = commentRepo;
             _userActivityRepo = userActivityRepo;
+            _dateTime = dateTime;
         }
 
         #endregion Constructors
@@ -58,7 +61,7 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return;
 
-            var now = DateTime.Now;
+            var now = _dateTime.GetCurrentTime();
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
@@ -99,7 +102,7 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
             if (!canAccessToTheClassRoom) return;
 
-            var now = DateTime.Now;
+            var now = _dateTime.GetCurrentTime();
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 

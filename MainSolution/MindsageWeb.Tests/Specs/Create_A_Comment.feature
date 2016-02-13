@@ -98,7 +98,8 @@ Scenario: User create a new comment Then system create a new comment
         "Description": "Hello lesson 1",
         "TotalLikes": 0,
         "LessonId": "Lesson01",
-        "Discussions": []
+        "Discussions": [],
+		"CreatedDate": "2/8/2016 00:00 am"
     }
     """
     And System update UserActivity collection with JSON format is

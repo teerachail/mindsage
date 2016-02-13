@@ -190,9 +190,9 @@ this.FeatureBackground();
 #line hidden
 #line 128
     testRunner.And("System add new LikeLesson by JSON format is", "{\r\n    \"ClassRoomId\": \"ClassRoom01\",\r\n    \"LessonId\": \"Lesson01\",\r\n    \"LikedByUs" +
-                    "erProfileId\": \"sakul@mindsage.com\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+                    "erProfileId\": \"sakul@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 136
+#line 137
  testRunner.And("System update UserActivity collection with JSON format is", @"{
 ""id"": ""UserActivity01"",
 ""UserProfileId"": ""sakul@mindsage.com"",

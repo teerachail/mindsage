@@ -18,19 +18,19 @@ namespace MindsageWeb.Tests.Specs
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class Create_A_DiscussionFeature
+    public partial class Remove_A_DiscussionFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "Create_A_Discussion.feature"
+#line 1 "Remove_A_Discussion.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Create_A_Discussion", "\tIn order to avoid silly mistakes\r\n\tAs a math idiot\r\n\tI want to be told the sum o" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Remove_A_Discussion", "\tIn order to avoid silly mistakes\r\n\tAs a math idiot\r\n\tI want to be told the sum o" +
                     "f two numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -46,9 +46,9 @@ namespace MindsageWeb.Tests.Specs
         public virtual void TestInitialize()
         {
             if (((testRunner.FeatureContext != null) 
-                        && (testRunner.FeatureContext.FeatureInfo.Title != "Create_A_Discussion")))
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "Remove_A_Discussion")))
             {
-                MindsageWeb.Tests.Specs.Create_A_DiscussionFeature.FeatureSetup(null);
+                MindsageWeb.Tests.Specs.Remove_A_DiscussionFeature.FeatureSetup(null);
             }
         }
         
@@ -75,12 +75,11 @@ namespace MindsageWeb.Tests.Specs
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
-    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"Sakul jaruthanaset\",\r\n\"ImageProfileUr" +
-                    "l\": \"ImgURL01\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Tea" +
-                    "cher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n" +
-                    "},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01" +
+                    "\",\r\n\t\"Role\": \"Teacher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Cl" +
+                    "assCalendar01\",\r\n},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 27
+#line 25
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -100,7 +99,7 @@ namespace MindsageWeb.Tests.Specs
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 48
+#line 46
     testRunner.And("System have Comment collection with JSON format are", @"[
     {
         ""Id"": ""Comment01"",
@@ -109,11 +108,21 @@ namespace MindsageWeb.Tests.Specs
         ""Description"": ""Hello lesson 1"",
         ""TotalLikes"": 0,
         ""LessonId"": ""Lesson01"",
-        ""Discussions"": []
+        ""Discussions"":
+[
+{
+	""id"": ""Discussion01"",
+	""Description"": ""This is a discussion"",
+	""TotalLikes"": 0,
+	""CreatorImageUrl"": ""ImgURL01"",
+	""CreatorDisplayName"": ""Sakul jaruthanaset"",
+	""CreatedByUserProfileId"": ""sakul@mindsage.com"",
+}
+]
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 62
+#line 70
     testRunner.And("System have UserActivity collection with JSON format are", @"[
 {
 ""id"": ""UserActivity01"",
@@ -131,7 +140,7 @@ namespace MindsageWeb.Tests.Specs
 		""Content01""
 	],
 	""CreatedCommentAmount"": 1,
-	""ParticipationAmount"": 0
+	""ParticipationAmount"": 1
 }
 ]
 }
@@ -140,51 +149,31 @@ namespace MindsageWeb.Tests.Specs
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("User create a new discussion Then system create a new discussion")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("User remove his comment Then system remove his comment")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Remove_A_Discussion")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mock")]
-        public virtual void UserCreateANewDiscussionThenSystemCreateANewDiscussion()
+        public virtual void UserRemoveHisCommentThenSystemRemoveHisComment()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create a new discussion Then system create a new discussion", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User remove his comment Then system remove his comment", new string[] {
                         "mock"});
-#line 89
+#line 97
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 90
+#line 98
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 91
-    testRunner.When("UserProfileId \'sakul@mindsage.com\' create a new discussion with a message is \'Thi" +
-                    "s is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoom" +
-                    ": \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 99
+    testRunner.When("UserProfileId \'sakul@mindsage.com\' remove the discussion \'Discussion01\' from comm" +
+                    "ent \'Comment01\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 92
-    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment01\' a" +
-                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
-                    ": \"ImgURL01\",\r\n\"CreatorDisplayName\": \"Sakul jaruthanaset\",\r\n\"CreatedByUserProfil" +
-                    "eId\": \"sakul@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 105
-    testRunner.And("System update UserActivity collection with JSON format is", @"{
-""id"": ""UserActivity01"",
-""UserProfileId"": ""sakul@mindsage.com"",
-""ClassRoomId"": ""ClassRoom01"",
-""LessonActivities"":
-[
-{
-""id"": ""LessonActivity01"",
-""LessonId"": ""Lesson01"",
-
-""TotalContentsAmount"": 1,
-""SawContentIds"": 
-[
-	""Content01""
-],
-""CreatedCommentAmount"": 1,
-""ParticipationAmount"": 1
-}
-]
-}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 100
+ testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment01\' a" +
+                    "re", "[\r\n{\r\n\"id\": \"Discussion01\",\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\"" +
+                    ": 0,\r\n\"CreatorImageUrl\": \"ImgURL01\",\r\n\"CreatorDisplayName\": \"Sakul jaruthanaset\"" +
+                    ",\r\n\"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\"DeletedDate\": \"2/8/2016 00:" +
+                    "00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 114
+    testRunner.And("System doesn\'t update UserActivity collection with JSON format is", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

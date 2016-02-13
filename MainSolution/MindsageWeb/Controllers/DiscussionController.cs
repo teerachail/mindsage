@@ -17,6 +17,7 @@ namespace MindsageWeb.Controllers
         private IUserProfileRepository _userprofileRepo;
         private ICommentRepository _commentRepo;
         private IUserActivityRepository _userActivityRepo;
+        private IDateTime _dateTime;
 
         #endregion Fields
 
@@ -32,19 +33,21 @@ namespace MindsageWeb.Controllers
         public DiscussionController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             ICommentRepository commentRepo,
-            IUserActivityRepository userActivityRepo)
+            IUserActivityRepository userActivityRepo,
+            IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
             _userprofileRepo = userprofileRepo;
             _commentRepo = commentRepo;
             _userActivityRepo = userActivityRepo;
+            _dateTime = dateTime;
         }
 
         #endregion Constructors
 
         #region Methods
 
-        // POST: api/Discussion
+        // POST: api/discussion
         public void Post(PostNewDiscussionRequest body)
         {
             var areArgumentsValid = body != null
@@ -59,7 +62,7 @@ namespace MindsageWeb.Controllers
             var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return;
 
-            var now = DateTime.Now;
+            var now = _dateTime.GetCurrentTime();
             var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
@@ -95,6 +98,38 @@ namespace MindsageWeb.Controllers
 
             selectedLesson.ParticipationAmount++;
             _userActivityRepo.UpsertUserActivity(selectedUserActivity);
+        }
+
+        // PUT: api/discussion/{discusion-id}
+        public void Put(string id, RemoveDiscussionRequest body)
+        {
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && body != null
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.CommentId)
+                && !string.IsNullOrEmpty(body.LessonId)
+                && !string.IsNullOrEmpty(body.UserProfileId);
+            if (!areArgumentsValid) return;
+
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
+            if (!canAccessToTheClassRoom) return;
+
+            var now = _dateTime.GetCurrentTime();
+            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            if (!canAccessToTheClassLesson) return;
+
+            var selectedComment = _commentRepo.GetCommentById(body.CommentId);
+            if (selectedComment == null) return;
+            var selectedDiscussion = selectedComment.Discussions.FirstOrDefault(it => it.id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
+            if (selectedDiscussion == null) return;
+
+            var canDeleteTheDiscussion = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase)
+                || selectedDiscussion.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
+            if (!canDeleteTheDiscussion) return;
+
+            selectedDiscussion.DeletedDate = now;
+            _commentRepo.UpsertComment(selectedComment);
         }
 
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId, out UserProfile userprofile)

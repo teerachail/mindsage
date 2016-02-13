@@ -131,6 +131,7 @@ Scenario: User click like lesson Then system update lesson's total like
         "ClassRoomId": "ClassRoom01",
         "LessonId": "Lesson01",
         "LikedByUserProfileId": "sakul@mindsage.com",
+		"CreatedDate": "2/8/2016 00:00 am"
     }
     """  
 	And System update UserActivity collection with JSON format is  

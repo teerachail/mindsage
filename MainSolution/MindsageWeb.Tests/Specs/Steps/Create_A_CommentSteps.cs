@@ -47,6 +47,7 @@ namespace MindsageWeb.Tests.Specs.Steps
                 && !comment.DeletedDate.HasValue
                 && comment.CreatorDisplayName == expected.CreatorDisplayName
                 && comment.CreatorImageUrl == expected.CreatorImageUrl
+                && comment.CreatedDate == expected.CreatedDate
             )));
         }
 
